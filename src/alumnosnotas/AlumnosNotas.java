@@ -18,6 +18,8 @@ public class AlumnosNotas {
         
         Alumno alu1 = new Alumno("Pedro");
         
+        
+        
         alu1.mostrar();
     }
     

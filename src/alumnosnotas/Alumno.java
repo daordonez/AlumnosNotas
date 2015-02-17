@@ -39,10 +39,11 @@ public class Alumno {
         this.dirNum = null;
         this.dirCP = 0;
         
-        this.notas = new float[MAX_ASIG][MAX_EVA];
+        //evitar evaluación 0
+        this.notas = new float[MAX_ASIG + 1][MAX_EVA + 1];
         
         //Inicializa nombres de notas para cualquier alumno, se supone que cada alumno nuevo tiene las tres asignaturas
-        this.nomNotas = new String[MAX_ASIG];
+        this.nomNotas = new String[MAX_ASIG + 1];
         
         initNomNot(this.nomNotas);
         
@@ -107,11 +108,14 @@ public class Alumno {
     }
     
     public void introNotas() {
+        //Lectura usuario desde teclado
         Scanner tec = new Scanner(System.in);
+        
+        System.out.println("Introduzca notas:");
 
-        for (int i = 0; i < this.notas.length; i++) {
+        for (int i = 1; i < this.notas.length; i++) {
             System.out.println(this.nomNotas[i]);
-            for (int j = 0; j < this.notas[0].length; j++) {
+            for (int j = 1; j < this.notas[0].length; j++) {
                 System.out.print("\t Eva " + j + ": ");
                 this.notas[i][j] = tec.nextFloat();
             }
@@ -119,11 +123,12 @@ public class Alumno {
     }
 
     private void mostrarNotas() {
-        for (int i = 0; i < this.notas.length; i++) {
-            System.out.println("\t" + this.nomNotas[i]);
-            for (int j = 0; j < this.notas[0].length; j++) {
-                System.out.println("\t EVA " + j + ": " + this.notas[i][j]);
+        for (int i = 1; i < this.notas.length; i++) {
+            System.out.print("\t" + this.nomNotas[i]);
+            for (int j = 1; j < this.notas[0].length; j++) {
+                System.out.print("\t EVA " + j + ": " + this.notas[i][j]);
             }
+            System.out.println();
         }
     }
     
@@ -140,6 +145,7 @@ public class Alumno {
         for (int i = 0; i < 15; i++) {
             System.out.print("*");
         }
+        System.out.println();
         System.out.println(info);
     }
     
