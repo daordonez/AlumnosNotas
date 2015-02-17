@@ -102,9 +102,9 @@ public class Alumno {
     }
     
     private static void initNomNot(String nombres[]){
-        nombres[0] = "PRG";
-        nombres[1] = "BDA";
-        nombres[2] = "EDD";
+        nombres[1] = "PRG";
+        nombres[2] = "BDA";
+        nombres[3] = "EDD";
     }
     
     public void introNotas() {
@@ -150,9 +150,9 @@ public class Alumno {
     }
     
     private void verDirecc(){
-        System.out.println("Calle: "+this.dirCalle);
-        System.out.println("Num: "+this.dirNum);
-        System.out.println("CP: "+this.dirCP);
+        System.out.println("Calle: "+dirCalle);
+        System.out.println("Num: "+dirNum);
+        System.out.println("CP: "+dirCP);
     }
     
 }
