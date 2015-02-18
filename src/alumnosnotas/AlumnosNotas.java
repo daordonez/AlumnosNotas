@@ -9,14 +9,12 @@ package alumnosnotas;
  *
  * @author diegordonez
  */
-import java.util.Scanner;
 public class AlumnosNotas {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //Recolector desde teclado
         
         Utils.infoUs("--> Registro de notas <--");
         //Pregunta con cuantos alumnos contará la clase
@@ -29,38 +27,42 @@ public class AlumnosNotas {
         Alumno clase[] = new Alumno[cAlus + 1];
         
         boolean salir = false;
-        
+        int slc;
         do {
-            Utils.infoUs("--> Menú <--");
-            System.out.println("1. Alta alumne");
-            System.out.println("2. Poner nota alumno");
-            System.out.println("3. Buscar alumno");
-            System.out.println("0. Salir");
-            Utils.infoUs("");
-            System.out.print("Opción: ");
-            int slc = Utils.leerInt();
+                try {
+                Utils.infoUs("--> Menú <--");
+                System.out.println("1. Alta alumne");
+                System.out.println("2. Poner nota alumno");
+                System.out.println("3. Buscar alumno");
+                System.out.println("0. Salir");
+                Utils.infoUs("");
+                System.out.print("Opción: ");
+                slc = Utils.leerInt();
+                switch (slc) {
+                    case 0:
+                        salir = true;
+                        break;
+                    case 1:
 
-            switch (slc) {
-                case 0:
-                    salir = true;
-                    break;
-                case 1:
-                    
-                    Utils.infoUs("Nuevo alumno <--");
-                    nuevoAlumno(clase);
+                        Utils.infoUs("Nuevo alumno <--");
+                        nuevoAlumno(clase);
 
-                    break;
-                case 2:
+                        break;
+                    case 2:
 
-                    break;
-                case 3:
+                        break;
+                    case 3:
 
-                    break;
-                default:
-                    System.err.println("Opción incorrecta");
+                        break;
+                    default:
+                        System.err.println("Opción incorrecta");
+                        break;
+                }
+            } catch (java.util.InputMismatchException e) {
+                    Utils.redInfo("Caracter no valido");
+                    Utils.flush();
             }
         } while (salir == false);
-        
     }
     
     public static void nuevoAlumno( Alumno vecAlus[]){

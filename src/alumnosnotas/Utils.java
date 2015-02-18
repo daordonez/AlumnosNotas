@@ -10,6 +10,7 @@ package alumnosnotas;
  * @author diegordonez
  */
 import java.util.Scanner;
+
 public class Utils {
     
     private static Scanner tec = new Scanner(System.in);
@@ -22,6 +23,16 @@ public class Utils {
         System.out.println(info);
     }
     
+    public static void redInfo(String info){
+         for (int i = 0; i < 25; i++) {
+            System.err.print("*");
+        }
+        System.err.println();
+        System.err.println(info);
+    
+    }
+   
+    
     //Lecturas desde teclado
     public static String leerCad(){
         String cad ;
@@ -33,6 +44,9 @@ public class Utils {
         num = tec.nextInt();
         return num;
     }
-   
+    
+    public static void flush(){
+        tec.nextLine();
+    }
     
 }
