@@ -26,13 +26,37 @@ public class Alumno {
     private String dirNum;
     private int dirCP;
     private float notas[][];
-    private String nomNotas[];
+    private static String nomNotas[] = {"","PRG","BDA","EDD"};
+    
     
     //Contador de objetos de tipo alumno crados 
     private static int cantAlu = 0;
     
-    //Constructor por defecto, campo minimo requerido nombre de alumno
-    public Alumno( String nom){
+        
+    
+    public Alumno(){
+        
+        System.out.print("Nombre: ");
+        this.nombre = Utils.leerCad();
+        Utils.infoUs("Dirección:");
+        System.out.print("\t Calle:");
+        this.dirCalle = Utils.leerCad();
+        System.out.print("\t Número:");
+        this.dirNum = Utils.leerCad();
+        System.out.print("\t CP:");
+        this.dirCP = Utils.leerInt();
+        
+        this.notas = new float[MAX_ASIG + 1][MAX_EVA +1];
+        cantAlu++;
+    }
+    /**
+     * Constructor simple todos los atributos se inicializarán por defecto a 'null, menos el nombre pasado
+     * parametro.
+     * Se incrementará la cantidad de objetos creados por clase
+     * @param nom Nombre del nuevo alumno
+     * 
+     */
+    public Alumno(String nom){
         this.nombre = nom;
         this.telefono = null;
         this.dirCalle = null;
@@ -41,13 +65,32 @@ public class Alumno {
         
         //evitar evaluación 0
         this.notas = new float[MAX_ASIG + 1][MAX_EVA + 1];
-        
-        //Inicializa nombres de notas para cualquier alumno, se supone que cada alumno nuevo tiene las tres asignaturas
-        this.nomNotas = new String[MAX_ASIG + 1];
-        
-        initNomNot(this.nomNotas);
-        
+                
         //Si se hace uso del constructor incrementa contador de objetos de tipo alumno
+        
+        cantAlu++;
+    }
+    //Constructor Completo
+    /**
+     * Constructor mas detallado. Rellena todos los campos descriptivos del objeto , menos las notas.
+     * Incrementa el contador global de objetos creador por la clase.
+     * @param nom
+     * @param telf
+     * @param dirCalle
+     * @param dirNum
+     * @param dirCP 
+     */
+    public Alumno(String nom, String telf, String dirCalle, String dirNum, int dirCP){
+        this.nombre = nom;
+        this.telefono = telf;
+        this.dirCalle = dirCalle;
+        this.dirNum = dirNum;
+        this.dirCP = dirCP;
+        
+        //Crea matriz de notas pero no se reciben parametros ni se puede modificar mediante
+        //este constructor
+        
+        this.notas = new float[MAX_ASIG + 1][MAX_EVA +1];
         
         cantAlu++;
     }
@@ -97,14 +140,8 @@ public class Alumno {
         return cantAlu;
     }
 
-    public static void setCantAlu(int cantAlu) {
+    private static void setCantAlu(int cantAlu) {
         Alumno.cantAlu = cantAlu;
-    }
-    
-    private static void initNomNot(String nombres[]){
-        nombres[1] = "PRG";
-        nombres[2] = "BDA";
-        nombres[3] = "EDD";
     }
     
     public void introNotas() {
@@ -114,7 +151,7 @@ public class Alumno {
         System.out.println("Introduzca notas:");
 
         for (int i = 1; i < this.notas.length; i++) {
-            System.out.println(this.nomNotas[i]);
+            System.out.println(Alumno.nomNotas[i]);
             for (int j = 1; j < this.notas[0].length; j++) {
                 System.out.print("\t Eva " + j + ": ");
                 this.notas[i][j] = tec.nextFloat();
@@ -123,30 +160,27 @@ public class Alumno {
     }
 
     private void mostrarNotas() {
+        System.out.print("\t");
+        for (int i = 1; i < notas[0].length; i++) {
+            System.out.print("\tEVA:"+i);
+        }
+        System.out.println();
         for (int i = 1; i < this.notas.length; i++) {
-            System.out.print("\t" + this.nomNotas[i]);
+            System.out.print("\t" + Alumno.nomNotas[i]+"|");
             for (int j = 1; j < this.notas[0].length; j++) {
-                System.out.print("\t EVA " + j + ": " + this.notas[i][j]);
+                System.out.print("\t"+ this.notas[i][j]);
             }
             System.out.println();
         }
     }
     
     public void mostrar(){
-        infoUs("Información alumno:");
+        Utils.infoUs("Información alumno:");
         System.out.println("Nombre: "+this.nombre);
         System.out.println("\t");
         verDirecc();
         mostrarNotas();
         
-    }
-    
-    private void infoUs(String info){
-        for (int i = 0; i < 15; i++) {
-            System.out.print("*");
-        }
-        System.out.println();
-        System.out.println(info);
     }
     
     private void verDirecc(){
