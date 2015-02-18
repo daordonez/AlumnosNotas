@@ -143,6 +143,23 @@ public class Alumno {
     private static void setCantAlu(int cantAlu) {
         Alumno.cantAlu = cantAlu;
     }
+
+    public float[][] getNotas() {
+        return notas;
+    }
+
+    /**
+     * Metodo adaptado a tener que pedir asignatura de la que se quiere introducir la nota y la evaluación. Es decir
+     * Introducir nota simple en matriz de notas
+     * @param asig asignatura siendo --> [1]= "PRG" , [1] = "BDA", [2] = "EDD"
+     * @param eva número de asignatura. MAX = 3
+     * @param valueNot Nota a introducir
+     */
+    public void setNotaSingle(int asig, int eva, float valueNot) {
+        this.notas[asig][eva] = valueNot;
+    }
+    
+    
     
     public void introNotas() {
         //Lectura usuario desde teclado

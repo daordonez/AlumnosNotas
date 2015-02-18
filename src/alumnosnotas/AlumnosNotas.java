@@ -18,14 +18,23 @@ public class AlumnosNotas {
         
         Utils.infoUs("--> Registro de notas <--");
         //Pregunta con cuantos alumnos contará la clase
-        
         Utils.infoUs("Crear clase de alumnos");
-        System.out.print("Introduzca cantidad de alumnos por clase: ");
-        int cAlus = Utils.leerInt();
-        
+        int cAlus = 0;
+        do {
+            
+            System.out.print("Introduzca cantidad de alumnos por clase: ");
+
+            try {
+                cAlus = Utils.leerInt();
+            } catch (java.util.InputMismatchException e) {
+                Utils.redInfo("Caracter no valido");
+                Utils.flush();
+            }
+        } while (cAlus <= 0);
+
         //Vector de alumnos que representa una clase de alumnos
         Alumno clase[] = new Alumno[cAlus + 1];
-        
+
         boolean salir = false;
         int slc;
         do {
@@ -74,4 +83,17 @@ public class AlumnosNotas {
         vecAlus[uAlu] = alumno;
     }
     
+    public static void muestraVectorObj( Alumno vecAlus[]){
+        for(Alumno alumno:vecAlus){
+            alumno.mostrar();
+        }
+    }
+    
+    public static void pideNotas(Alumno claseAlus[]){
+        for (Alumno alumno : claseAlus) {
+            Utils.infoUs("Nombre alumno: "+ alumno.getNombre());
+            System.out.print("Introduce nota: ");
+            
+        }
+    }
 }
