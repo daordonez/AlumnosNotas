@@ -44,7 +44,12 @@ public class Utils {
         num = tec.nextInt();
         return num;
     }
-    
+    public static float leeFloat(){
+        float fl;
+        fl = tec.nextFloat();
+        return fl;
+    }
+    //Flush de buffer
     public static void flush(){
         tec.nextLine();
     }

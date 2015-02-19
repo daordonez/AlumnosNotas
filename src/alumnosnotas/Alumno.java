@@ -33,7 +33,9 @@ public class Alumno {
     private static int cantAlu = 0;
     
         
-    
+    /**
+     * Constructor que va pidiendo al usuario progresivamente los parametros
+     */
     public Alumno(){
         
         System.out.print("Nombre: ");
