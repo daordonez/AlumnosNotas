@@ -5,8 +5,6 @@
  */
 package alumnosnotas;
 
-
-
 /**
  *
  * @author diegordonez
@@ -16,17 +14,16 @@ public class AlumnosNotas {
     /**
      * @param args the command line arguments
      */
-    
     static int uAlu = 0;
-    
+
     public static void main(String[] args) {
-        
+
         Utils.infoUs("--> Registro de notas <--");
         //Pregunta con cuantos alumnos contará la clase
         Utils.infoUs("Crear clase de alumnos");
         int cAlus = 0;
         do {
-            
+
             System.out.print("Introduzca cantidad de alumnos por clase: ");
 
             try {
@@ -38,15 +35,14 @@ public class AlumnosNotas {
         } while (cAlus <= 0);
 
         //Vector de alumnos que representa una clase de alumnos evita pos 0
-      Alumno clase[] = new Alumno[cAlus + 1];
-        
-        //initCl(clase);
+        Alumno clase[] = new Alumno[cAlus + 1];
 
+        //initCl(clase);
         boolean salir = false;
         int slc;
-        
+
         do {
-                try {
+            try {
                 Utils.infoUs("--> Menú <--");
                 System.out.println("1. Alta alumne");
                 System.out.println("2. Poner nota alumno");
@@ -60,17 +56,15 @@ public class AlumnosNotas {
                         salir = true;
                         break;
                     case 1:
-                        
-                       
-                        
+
                         if (cAlus > 0) {
                             Utils.infoUs("Nuevo alumno <--");
                             uAlu = nuevoAlumno(clase);
                             cAlus--;
-                        }else {
+                        } else {
                             Utils.redInfo("Número máximo de alumnos alcanzado!");
                         }
-                        
+
                         break;
                     case 2:
 
@@ -80,7 +74,7 @@ public class AlumnosNotas {
 
                         break;
                     case 3:
-                        
+
                         Utils.infoUs("Busca alumno ¿?");
                         System.out.print("Introduce nombre de alumno:");
                         buscaAlumno(clase, Utils.leerCad());
@@ -91,23 +85,23 @@ public class AlumnosNotas {
                         break;
                 }
             } catch (java.util.InputMismatchException e) {
-                    Utils.redInfo("Caracter no valido");
-                    Utils.flush();
+                Utils.redInfo("Caracter no valido");
+                Utils.flush();
             }
         } while (salir == false);
     }
-   
-    public static int nuevoAlumno( Alumno vecAlus[]){
-        
+
+    public static int nuevoAlumno(Alumno vecAlus[]) {
+
         ++uAlu;
-        
+
         vecAlus[uAlu] = new Alumno();
-        
+
         return uAlu;
     }
-    
-    public static void muestraVectorObj( Alumno vecAlus[]){
-        
+
+    public static void muestraVectorObj(Alumno vecAlus[]) {
+
         for (int i = 1; i < vecAlus.length; i++) {
             if (vecAlus[i] == null) {
                 break;
@@ -115,15 +109,15 @@ public class AlumnosNotas {
             vecAlus[i].mostrar();
         }
     }
-       
-    public static void pideNotas(Alumno claseAlus[]){
-        for (int i = 1; i <= uAlu ; i++) {
-            Utils.infoUs("Nombre alumno: "+ claseAlus[i].getNombre());
+
+    public static void pideNotas(Alumno claseAlus[]) {
+        for (int i = 1; i <= uAlu; i++) {
+            Utils.infoUs("Nombre alumno: " + claseAlus[i].getNombre());
             Utils.infoUs("-> Asignaturas <-");
             System.out.println("1. PRG (Programación)");
             System.out.println("2. BDA (Bases de datos)");
             System.out.println("3. EDD (Entornos)");
-            
+
             boolean isAsig = false;
             int asig = 0;
             int eva = 0;
@@ -136,7 +130,7 @@ public class AlumnosNotas {
 
                     if ((asig < 0 || asig > 3) || (eva < 0 || eva > 3)) {
                         Utils.redInfo("Valor(es) fuera de rango. Rango comprendido 0-3");
-                        
+
                     } else {
                         if (asig == 1) {
                             System.out.println("Programación");
@@ -166,8 +160,8 @@ public class AlumnosNotas {
                         Utils.redInfo("Nota fuera de rango. Rango permitido 0-10");
                     } else {
                         Utils.infoUs("");
-                        System.out.println("Alumno:"+claseAlus[i].getNombre());
-                        System.out.println("\t Nota:"+nota);
+                        System.out.println("Alumno:" + claseAlus[i].getNombre());
+                        System.out.println("\t Nota:" + nota);
                         Utils.infoUs("");
                         isNota = true;
                     }
@@ -176,19 +170,19 @@ public class AlumnosNotas {
                     Utils.flush();
                 }
             } while (isNota == false);
-            
+
             claseAlus[i].setNotaSingle(asig, eva, nota);
         }
     }
-    
-    public static void buscaAlumno(Alumno clasAlus[], String nombre){
+
+    public static void buscaAlumno(Alumno clasAlus[], String nombre) {
         for (int i = 1; i < uAlu; i++) {
             String tmp = clasAlus[i].getNombre();
-            
+
             if (tmp.equals(nombre)) {
                 clasAlus[i].mostrar();
             }
-            
+
         }
     }
 }

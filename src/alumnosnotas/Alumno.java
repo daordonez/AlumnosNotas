@@ -38,15 +38,11 @@ public class Alumno {
      */
     public Alumno(){
         
-        System.out.print("Nombre: ");
-        this.nombre = Utils.imputString();
-        Utils.infoUs("Dirección:");
-        System.out.print("\t Calle:");
-        this.dirCalle = Utils.imputString();
-        System.out.print("\t Número:");
-        this.dirNum = Utils.imputString();
-        System.out.print("\t CP:");
-        this.dirCP = Utils.imputInt();
+        this.nombre = Utils.imputString("Nombre: ");
+        this.telefono = Utils.imputString("Telefono: ");
+        this.dirCalle = Utils.imputString("Calle:");
+        this.dirNum = Utils.imputString("Numero: ");
+        this.dirCP = Utils.imputInt("CP: ");
 
         
         this.notas = new float[MAX_ASIG + 1][MAX_EVA +1];
