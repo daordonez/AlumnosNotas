@@ -57,4 +57,40 @@ public class Utils {
         tec.nextLine();
     }
     
+    //Imput- errores
+    
+    public static int imputInt(){
+        int numInt = 0;
+        
+        boolean isInt = false;
+        
+        do {            
+            try {
+            tec.nextInt();
+            isInt = true;
+        } catch (java.util.InputMismatchException e) {
+            redInfo("Caracter no reconocido. Debe ser Entero");
+        }
+        } while (isInt == false);
+        
+        return numInt;
+    }
+    
+    public static String imputString(){
+        String cadString = null;
+        
+        boolean isString = false;
+        
+        do {            
+            try {
+            tec.next();
+            isString = true;
+        } catch (java.util.InputMismatchException e) {
+            redInfo("Caracter no reconocido. Debe ser Cadena (String)");
+        }
+        } while (isString == false);
+        
+        return cadString;
+    }
+    
 }

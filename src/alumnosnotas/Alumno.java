@@ -38,20 +38,16 @@ public class Alumno {
      */
     public Alumno(){
         
-//        System.out.print("Nombre: ");
-//        this.nombre = Utils.leerCad();
-//        Utils.infoUs("Dirección:");
-//        System.out.print("\t Calle:");
-//        this.dirCalle = Utils.leerCad();
-//        System.out.print("\t Número:");
-//        this.dirNum = Utils.leerCad();
-//        System.out.print("\t CP:");
-//        this.dirCP = Utils.leerInt();
-        this.nombre = null;
-        this.telefono = null;
-        this.dirCalle = null;
-        this.dirNum = null;
-        this.dirCP = 0;
+        System.out.print("Nombre: ");
+        this.nombre = Utils.imputString();
+        Utils.infoUs("Dirección:");
+        System.out.print("\t Calle:");
+        this.dirCalle = Utils.imputString();
+        System.out.print("\t Número:");
+        this.dirNum = Utils.imputString();
+        System.out.print("\t CP:");
+        this.dirCP = Utils.imputInt();
+
         
         this.notas = new float[MAX_ASIG + 1][MAX_EVA +1];
         cantAlu++;
@@ -151,8 +147,8 @@ public class Alumno {
         Alumno.cantAlu = cantAlu;
     }
 
-    public float[][] getNotas() {
-        return notas;
+    public float getNotas(int asig,int eva) {
+        return notas[asig][eva];
     }
 
     /**
@@ -208,9 +204,9 @@ public class Alumno {
     }
     
     private void verDirecc(){
-        System.out.println("Calle: "+dirCalle);
-        System.out.println("Num: "+dirNum);
-        System.out.println("CP: "+dirCP);
+        System.out.println("Calle: "+this.dirCalle);
+        System.out.println("Num: "+this.dirNum);
+        System.out.println("CP: "+this.dirCP);
     }
     
 }

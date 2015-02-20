@@ -40,7 +40,7 @@ public class AlumnosNotas {
         //Vector de alumnos que representa una clase de alumnos evita pos 0
       Alumno clase[] = new Alumno[cAlus + 1];
         
-        initCl(clase);
+        //initCl(clase);
 
         boolean salir = false;
         int slc;
@@ -73,17 +73,21 @@ public class AlumnosNotas {
                         
                         break;
                     case 2:
-                        
-//                        muestraVectorObj(clase);
+
+                        muestraVectorObj(clase);
                         Utils.infoUs("Poner nota alumno <--");
                         pideNotas(clase);
 
                         break;
                     case 3:
+                        
+                        Utils.infoUs("Busca alumno ¿?");
+                        System.out.print("Introduce nombre de alumno:");
+                        buscaAlumno(clase, Utils.leerCad());
 
                         break;
                     default:
-                        System.err.println("Opción incorrecta");
+                        Utils.redInfo("Opción incorrecta");
                         break;
                 }
             } catch (java.util.InputMismatchException e) {
@@ -97,8 +101,7 @@ public class AlumnosNotas {
         
         ++uAlu;
         
-        System.out.print("\t Introduzca nombre:");
-        vecAlus[uAlu].setNombre(Utils.leerCad());
+        vecAlus[uAlu] = new Alumno();
         
         return uAlu;
     }
@@ -106,19 +109,15 @@ public class AlumnosNotas {
     public static void muestraVectorObj( Alumno vecAlus[]){
         
         for (int i = 1; i < vecAlus.length; i++) {
+            if (vecAlus[i] == null) {
+                break;
+            }
             vecAlus[i].mostrar();
         }
     }
-    
-    public static void initCl(Alumno cl[]){
-        for (int i = 1; i < cl.length; i++) {
-            cl[i] = new Alumno();
-            
-        }
-    }
-    
+       
     public static void pideNotas(Alumno claseAlus[]){
-        for (int i = 1; claseAlus.length < 10; i++) {
+        for (int i = 1; i <= uAlu ; i++) {
             Utils.infoUs("Nombre alumno: "+ claseAlus[i].getNombre());
             Utils.infoUs("-> Asignaturas <-");
             System.out.println("1. PRG (Programación)");
@@ -179,6 +178,17 @@ public class AlumnosNotas {
             } while (isNota == false);
             
             claseAlus[i].setNotaSingle(asig, eva, nota);
+        }
+    }
+    
+    public static void buscaAlumno(Alumno clasAlus[], String nombre){
+        for (int i = 1; i < uAlu; i++) {
+            String tmp = clasAlus[i].getNombre();
+            
+            if (tmp.equals(nombre)) {
+                clasAlus[i].mostrar();
+            }
+            
         }
     }
 }
