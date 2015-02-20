@@ -9,10 +9,11 @@ package alumnosnotas;
  *
  * @author diegordonez
  */
-import java.util.Scanner;
+import java.util.*;
 
 public class Utils {
     
+    private static Iterator it ;
     private static Scanner tec = new Scanner(System.in);
     
     public static void infoUs(String info){
@@ -29,8 +30,10 @@ public class Utils {
         }
         System.err.println();
         System.err.println(info);
-    
     }
+    
+    //Arrays
+    public static void iterar(){}
    
     
     //Lecturas desde teclado

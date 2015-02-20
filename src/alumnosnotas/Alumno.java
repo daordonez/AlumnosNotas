@@ -38,15 +38,20 @@ public class Alumno {
      */
     public Alumno(){
         
-        System.out.print("Nombre: ");
-        this.nombre = Utils.leerCad();
-        Utils.infoUs("Dirección:");
-        System.out.print("\t Calle:");
-        this.dirCalle = Utils.leerCad();
-        System.out.print("\t Número:");
-        this.dirNum = Utils.leerCad();
-        System.out.print("\t CP:");
-        this.dirCP = Utils.leerInt();
+//        System.out.print("Nombre: ");
+//        this.nombre = Utils.leerCad();
+//        Utils.infoUs("Dirección:");
+//        System.out.print("\t Calle:");
+//        this.dirCalle = Utils.leerCad();
+//        System.out.print("\t Número:");
+//        this.dirNum = Utils.leerCad();
+//        System.out.print("\t CP:");
+//        this.dirCP = Utils.leerInt();
+        this.nombre = null;
+        this.telefono = null;
+        this.dirCalle = null;
+        this.dirNum = null;
+        this.dirCP = 0;
         
         this.notas = new float[MAX_ASIG + 1][MAX_EVA +1];
         cantAlu++;
