@@ -11,9 +11,7 @@ package alumnosnotas;
  */
 public class AlumnosNotas {
 
-    /**
-     * @param args the command line arguments
-     */
+    //Control de alumnos insertados al Array "clase". Evita salida de rango en lectura del Array.
     static int uAlu = 0;
 
     public static void main(String[] args) {
@@ -25,7 +23,8 @@ public class AlumnosNotas {
         do {
 
             System.out.print("Introduzca cantidad de alumnos por clase: ");
-
+            
+            //Evitar caracteres no alfabéticos
             try {
                 cAlus = Utils.leerInt();
             } catch (java.util.InputMismatchException e) {
@@ -37,11 +36,12 @@ public class AlumnosNotas {
         //Vector de alumnos que representa una clase de alumnos evita pos 0
         Alumno clase[] = new Alumno[cAlus + 1];
 
-        //initCl(clase);
+        
         boolean salir = false;
         int slc;
 
         do {
+            //Evitar caracteres alfabéticos
             try {
                 Utils.infoUs("--> Menú <--");
                 System.out.println("1. Alta alumne");
@@ -56,7 +56,8 @@ public class AlumnosNotas {
                         salir = true;
                         break;
                     case 1:
-
+                        
+                        //No introducir mas alumnos de los que caben en el Array de alumnos
                         if (cAlus > 0) {
                             Utils.infoUs("Nuevo alumno <--");
                             uAlu = nuevoAlumno(clase);
@@ -67,19 +68,24 @@ public class AlumnosNotas {
 
                         break;
                     case 2:
-
-                        muestraVectorObj(clase);
-                        Utils.infoUs("Poner nota alumno <--");
-                        pideNotas(clase);
+                        
+                        //No poner notas si no existen alumnos introducidos
+                        if (uAlu == 0) {
+                            Utils.redInfo("No existen alumnos dados de alta");
+                        } else {
+                            muestraVectorObj(clase);
+                            Utils.infoUs("Poner nota alumno <--");
+                            pideNotas(clase);
+                        }
 
                         break;
                     case 3:
-                        
+
                         //Evitar buscar alumnos si no existen alumnos dados de alta
                         if (uAlu == 0) {
                             Utils.redInfo("No existen alumnos dados de alta");
-                        }else{
-                            
+                        } else {
+
                             Utils.infoUs("Busca alumno ¿?");
                             System.out.print("Introduce nombre de alumno:");
                             String aluBus = Utils.leerCad();
@@ -99,9 +105,10 @@ public class AlumnosNotas {
     }
 
     public static int nuevoAlumno(Alumno vecAlus[]) {
-
+        
+        //Preincremento para evitar posición 0 del Array de alumnos
         ++uAlu;
-   
+
         vecAlus[uAlu] = new Alumno();
 
         return uAlu;
@@ -110,6 +117,7 @@ public class AlumnosNotas {
     public static void muestraVectorObj(Alumno vecAlus[]) {
 
         for (int i = 1; i < vecAlus.length; i++) {
+            //Evitar NullPointerExeption por no estar inicializado todo el vector de alumnos
             if (vecAlus[i] == null) {
                 break;
             }
@@ -118,6 +126,7 @@ public class AlumnosNotas {
     }
 
     public static void pideNotas(Alumno claseAlus[]) {
+        // "<=" como condición en el caso de que solo exista un alumno introducido
         for (int i = 1; i <= uAlu; i++) {
             Utils.infoUs("Nombre alumno: " + claseAlus[i].getNombre());
             Utils.infoUs("-> Asignaturas <-");
@@ -126,6 +135,7 @@ public class AlumnosNotas {
             System.out.println("3. EDD (Entornos)");
 
             boolean isAsig = false;
+            //Incializar variables para función getNotaSingle en clase Alumno
             int asig = 0;
             int eva = 0;
             do {
@@ -134,7 +144,8 @@ public class AlumnosNotas {
                     asig = Utils.leerInt();
                     System.out.print("Selecciona evaluación:");
                     eva = Utils.leerInt();
-
+                    
+                    //No permitir salirse del rango de la matriz de notas
                     if ((asig <= 0 || asig > 3) || (eva <= 0 || eva > 3)) {
                         Utils.redInfo("Valor(es) fuera de rango. Rango comprendido 1-3");
 
@@ -183,9 +194,9 @@ public class AlumnosNotas {
     }
 
     public static void buscaAlumno(Alumno clasAlus[], String nombre) {
-        
+
         for (int i = 1; i <= uAlu; i++) {
-            
+
             String tmp = clasAlus[i].getNombre();
 
             System.out.println(tmp);
