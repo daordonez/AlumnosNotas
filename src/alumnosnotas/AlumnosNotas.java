@@ -74,10 +74,17 @@ public class AlumnosNotas {
 
                         break;
                     case 3:
-
-                        Utils.infoUs("Busca alumno ¿?");
-                        System.out.print("Introduce nombre de alumno:");
-                        buscaAlumno(clase, Utils.leerCad());
+                        
+                        //Evitar buscar alumnos si no existen alumnos dados de alta
+                        if (uAlu == 0) {
+                            Utils.redInfo("No existen alumnos dados de alta");
+                        }else{
+                            
+                            Utils.infoUs("Busca alumno ¿?");
+                            System.out.print("Introduce nombre de alumno:");
+                            String aluBus = Utils.leerCad();
+                            buscaAlumno(clase, aluBus);
+                        }
 
                         break;
                     default:
@@ -94,9 +101,7 @@ public class AlumnosNotas {
     public static int nuevoAlumno(Alumno vecAlus[]) {
 
         ++uAlu;
-        
-        System.out.println(uAlu);
-
+   
         vecAlus[uAlu] = new Alumno();
 
         return uAlu;
@@ -178,7 +183,8 @@ public class AlumnosNotas {
     }
 
     public static void buscaAlumno(Alumno clasAlus[], String nombre) {
-        for (int i = 1; i < uAlu; i++) {
+        
+        for (int i = 1; i <= uAlu; i++) {
             
             String tmp = clasAlus[i].getNombre();
 
