@@ -15,7 +15,7 @@ import java.util.*;
 public class Utils {
 
     private static Iterator it;
-    private static Scanner tec = new Scanner(System.in);
+    private static final Scanner tec = new Scanner(System.in);
 
     public static void infoUs(String info) {
         for (int i = 0; i < 25; i++) {
@@ -76,9 +76,10 @@ public class Utils {
         boolean isInt = false;
 
         do {
+            System.out.print(cadena);
+
             try {
-                System.out.print(cadena);
-                tec.nextInt();
+                numInt = tec.nextInt();
                 isInt = true;
             } catch (java.util.InputMismatchException e) {
                 redInfo("Caracter no reconocido. Debe ser Entero");
@@ -104,7 +105,7 @@ public class Utils {
         do {
             try {
                 System.out.print(cadena);
-                tec.next();
+                cadString = tec.next();
                 isString = true;
             } catch (java.util.InputMismatchException e) {
                 redInfo("Caracter no reconocido. Debe ser Cadena (String)");

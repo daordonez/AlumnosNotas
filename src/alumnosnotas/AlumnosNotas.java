@@ -94,6 +94,8 @@ public class AlumnosNotas {
     public static int nuevoAlumno(Alumno vecAlus[]) {
 
         ++uAlu;
+        
+        System.out.println(uAlu);
 
         vecAlus[uAlu] = new Alumno();
 
@@ -128,8 +130,8 @@ public class AlumnosNotas {
                     System.out.print("Selecciona evaluación:");
                     eva = Utils.leerInt();
 
-                    if ((asig < 0 || asig > 3) || (eva < 0 || eva > 3)) {
-                        Utils.redInfo("Valor(es) fuera de rango. Rango comprendido 0-3");
+                    if ((asig <= 0 || asig > 3) || (eva <= 0 || eva > 3)) {
+                        Utils.redInfo("Valor(es) fuera de rango. Rango comprendido 1-3");
 
                     } else {
                         if (asig == 1) {
@@ -177,8 +179,10 @@ public class AlumnosNotas {
 
     public static void buscaAlumno(Alumno clasAlus[], String nombre) {
         for (int i = 1; i < uAlu; i++) {
+            
             String tmp = clasAlus[i].getNombre();
 
+            System.out.println(tmp);
             if (tmp.equals(nombre)) {
                 clasAlus[i].mostrar();
             }
