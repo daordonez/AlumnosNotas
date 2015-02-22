@@ -56,6 +56,9 @@ public class Utils {
     }
     
     public static String capitalize(String toCapitalize){
+        if (toCapitalize.length() == 0) {
+            return toCapitalize;
+        }
         String capitalized = toCapitalize.substring(0,1).toUpperCase() + toCapitalize.substring(1);
         
         return capitalized;
@@ -101,12 +104,11 @@ public class Utils {
 
         do {
             System.out.print(cadena);
-
             try {
-                numInt = tec.nextInt();
+                numInt = leerInt();
                 isInt = true;
             } catch (java.util.InputMismatchException e) {
-                redInfo("Caracter no reconocido. Debe ser Entero");
+                redInfo("Caracter no reconocido. Debe ser Entero (Int)");
                 flush();
             }
         } while (isInt == false);
@@ -127,10 +129,12 @@ public class Utils {
         boolean isString = false;
 
         do {
+            System.out.print(cadena);
             try {
-                System.out.print(cadena);
-                cadString = tec.next();
+                cadString = leerCad();
                 isString = true;
+                //Revisar
+                flush();
             } catch (java.util.InputMismatchException e) {
                 redInfo("Caracter no reconocido. Debe ser Cadena (String)");
                 flush();
