@@ -12,11 +12,13 @@ package alumnosnotas;
 import java.io.*;
 import java.util.*;
 
+
 public class Utils {
 
     private static Iterator it;
     private static final Scanner tec = new Scanner(System.in);
 
+    //Salidas por pantalla
     public static void infoUs(String info) {
         for (int i = 0; i < 25; i++) {
             System.out.print("*");
@@ -32,9 +34,31 @@ public class Utils {
         System.err.println();
         System.err.println(info);
     }
-
-    //Arrays
-    public static void iterar() {
+    
+    /**
+     * Función para pasusar salida. Va imprimiendo puntos con un retardo especificado por parametro
+     * @param seg Delay --> Tiempos en segundos entre punto y punto
+     */
+    public static void pausedExit(int seg){
+        
+        int miliSeg = seg * 1000;
+        
+        for (int i = 0; i < 3; i++) {
+            System.out.print(".");
+            try {
+                Thread.sleep(miliSeg);
+            } catch (InterruptedException e) {
+                redInfo("Delay erroneo");
+                flush();
+            }
+        }
+        System.out.println();
+    }
+    
+    public static String capitalize(String toCapitalize){
+        String capitalized = toCapitalize.substring(0,1).toUpperCase() + toCapitalize.substring(1);
+        
+        return capitalized;
     }
 
     //Lecturas desde teclado

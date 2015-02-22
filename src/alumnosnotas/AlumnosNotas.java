@@ -101,6 +101,16 @@ public class AlumnosNotas {
                     case 4:
                         break;
                     case 5:
+                        
+                        if (uAlu == 0) {
+                            Utils.redInfo("No existen alumnos que módificar");
+                        } else {
+                            Utils.infoUs("Modificar datos alumno !¡");
+                            Utils.infoUs("");
+                            System.out.print("Introduzca nombre que desea módificar:");
+                            modificaAlumno(clase, Utils.leerCad());
+                        }
+                        
                         break;
                     case 6:
                         break;
@@ -117,6 +127,9 @@ public class AlumnosNotas {
                 Utils.flush();
             }
         } while (salir == false);
+        
+        System.out.print("Saliendo");
+        Utils.pausedExit(1);
     }
 
     public static int nuevoAlumno(Alumno vecAlus[]) {
@@ -204,7 +217,7 @@ public class AlumnosNotas {
                 }
             } while (isNota == false);
 
-            claseAlus[i].setNotaSingle(asig, eva, nota);
+            claseAlus[i].setNotaSimple(asig, eva, nota);
         }
     }
 
@@ -217,18 +230,30 @@ public class AlumnosNotas {
             System.out.println(tmp);
             if (tmp.equals(nombre)) {
                 clasAlus[i].mostrar();
+                break;
+            }else{
+                Utils.redInfo("No existen alumnos con el nombre:"+nombre+" en esta clase");
             }
 
         }
     }
     
     public static void modificaAlumno (Alumno claseAlus[], String nombre){
+        Utils.infoUs("Alumno:"+nombre);
         
         for (int i = 1; i <= uAlu; i++) {
             String tmp = claseAlus[i].getNombre();
             
             if (nombre.equals(tmp)) {
                 claseAlus[i].mostrar();
+                claseAlus[i].setNombre(Utils.imputString("\t Nuevo nombre:"));
+                claseAlus[i].setTelefono(Utils.imputString("\t Nuevo telefono:"));
+                claseAlus[i].setDirCalle(Utils.imputString("\t Nuevo nombre calle:"));
+                claseAlus[i].setDirNum(Utils.imputString("\t Nuevo número (Dirección):"));
+                claseAlus[i].setDirCP(Utils.imputInt("\t Nuevo CP:"));
+                break;
+            }else{
+                Utils.redInfo("No existen alumnos con el nombre: "+nombre+" en esta clase");
             }
         }
     }

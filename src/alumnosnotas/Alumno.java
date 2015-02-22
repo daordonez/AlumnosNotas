@@ -9,10 +9,11 @@ package alumnosnotas;
  *
  * @author diegordonez
  */
-import java.util.Scanner;
+
 
 public class Alumno {
 
+    //Limites de matriz de notas
     private static final int MAX_ASIG = 3;
     private static final int MAX_EVA = 3;
 
@@ -33,9 +34,9 @@ public class Alumno {
      */
     public Alumno() {
 
-        this.nombre = Utils.imputString("Nombre: ");
+        this.nombre = Utils.capitalize(Utils.imputString("Nombre: "));
         this.telefono = Utils.imputString("Telefono: ");
-        this.dirCalle = Utils.imputString("Calle:");
+        this.dirCalle = Utils.capitalize(Utils.imputString("Calle:"));
         this.dirNum = Utils.imputString("Numero: ");
         this.dirCP = Utils.imputInt("CP: ");
 
@@ -98,7 +99,7 @@ public class Alumno {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = Utils.capitalize(nombre);
     }
 
     public String getTelefono() {
@@ -108,15 +109,17 @@ public class Alumno {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
+    
+    //Nombre de la calle
     public String getDirCalle() {
         return dirCalle;
     }
 
     public void setDirCalle(String dirCalle) {
-        this.dirCalle = dirCalle;
+        this.dirCalle = Utils.capitalize(dirCalle);
     }
-
+    
+    //Número de la dirección
     public String getDirNum() {
         return dirNum;
     }
@@ -124,7 +127,7 @@ public class Alumno {
     public void setDirNum(String dirNum) {
         this.dirNum = dirNum;
     }
-
+    //CP - Dirección
     public int getDirCP() {
         return dirCP;
     }
@@ -132,13 +135,10 @@ public class Alumno {
     public void setDirCP(int dirCP) {
         this.dirCP = dirCP;
     }
-
+    
+    //Se evita setCantAlu con tal de no poder modificar valor desde ningún lugar
     public static int getCantAlu() {
         return cantAlu;
-    }
-
-    private static void setCantAlu(int cantAlu) {
-        Alumno.cantAlu = cantAlu;
     }
 
     public float getNotas(int asig, int eva) {
@@ -154,13 +154,14 @@ public class Alumno {
      * @param eva número de asignatura. MAX = 3
      * @param valueNot Nota a introducir
      */
-    public void setNotaSingle(int asig, int eva, float valueNot) {
+    public void setNotaSimple(int asig, int eva, float valueNot) {
         this.notas[asig][eva] = valueNot;
     }
-
+    
+    //Métodos públicos
     public void introNotas() {
         //Lectura usuario desde teclado
-        Scanner tec = new Scanner(System.in);
+        
 
         System.out.println("Introduzca notas:");
 
@@ -168,9 +169,18 @@ public class Alumno {
             System.out.println(Alumno.nomNotas[i]);
             for (int j = 1; j < this.notas[0].length; j++) {
                 System.out.print("\t Eva " + j + ": ");
-                this.notas[i][j] = tec.nextFloat();
+                this.notas[i][j] = Utils.leeFloat();
             }
         }
+    }
+
+    public void mostrar() {
+        Utils.infoUs("Información alumno:");
+        System.out.println("Nombre: " + this.nombre);
+        System.out.println("\t");
+        verDirecc();
+        mostrarNotas();
+
     }
 
     private void mostrarNotas() {
@@ -187,16 +197,6 @@ public class Alumno {
             System.out.println();
         }
     }
-
-    public void mostrar() {
-        Utils.infoUs("Información alumno:");
-        System.out.println("Nombre: " + this.nombre);
-        System.out.println("\t");
-        verDirecc();
-        mostrarNotas();
-
-    }
-
     private void verDirecc() {
         System.out.println("Calle: " + this.dirCalle);
         System.out.println("Num: " + this.dirNum);
