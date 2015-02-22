@@ -23,7 +23,7 @@ public class AlumnosNotas {
         do {
 
             System.out.print("Introduzca cantidad de alumnos por clase: ");
-            
+
             //Evitar caracteres no alfabéticos
             try {
                 cAlus = Utils.leerInt();
@@ -36,7 +36,6 @@ public class AlumnosNotas {
         //Vector de alumnos que representa una clase de alumnos evita pos 0
         Alumno clase[] = new Alumno[cAlus + 1];
 
-        
         boolean salir = false;
         int slc;
 
@@ -47,6 +46,11 @@ public class AlumnosNotas {
                 System.out.println("1. Alta alumne");
                 System.out.println("2. Poner nota alumno");
                 System.out.println("3. Buscar alumno");
+                System.out.println("4. Estadisticas");
+                System.out.println("5. Modificar datos de alumno");
+                System.out.println("6. Modificar nota  de alumno");
+                System.out.println("7. Borrar alumno");
+                System.out.println("8. Borrar todos los alumnos");
                 System.out.println("0. Salir");
                 Utils.infoUs("");
                 System.out.print("Opción: ");
@@ -56,7 +60,7 @@ public class AlumnosNotas {
                         salir = true;
                         break;
                     case 1:
-                        
+
                         //No introducir mas alumnos de los que caben en el Array de alumnos
                         if (cAlus > 0) {
                             Utils.infoUs("Nuevo alumno <--");
@@ -68,7 +72,7 @@ public class AlumnosNotas {
 
                         break;
                     case 2:
-                        
+
                         //No poner notas si no existen alumnos introducidos
                         if (uAlu == 0) {
                             Utils.redInfo("No existen alumnos dados de alta");
@@ -93,6 +97,17 @@ public class AlumnosNotas {
                         }
 
                         break;
+                        //Optativo
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+                        break;
                     default:
                         Utils.redInfo("Opción incorrecta");
                         break;
@@ -105,7 +120,7 @@ public class AlumnosNotas {
     }
 
     public static int nuevoAlumno(Alumno vecAlus[]) {
-        
+
         //Preincremento para evitar posición 0 del Array de alumnos
         ++uAlu;
 
@@ -144,7 +159,7 @@ public class AlumnosNotas {
                     asig = Utils.leerInt();
                     System.out.print("Selecciona evaluación:");
                     eva = Utils.leerInt();
-                    
+
                     //No permitir salirse del rango de la matriz de notas
                     if ((asig <= 0 || asig > 3) || (eva <= 0 || eva > 3)) {
                         Utils.redInfo("Valor(es) fuera de rango. Rango comprendido 1-3");
@@ -204,6 +219,17 @@ public class AlumnosNotas {
                 clasAlus[i].mostrar();
             }
 
+        }
+    }
+    
+    public static void modificaAlumno (Alumno claseAlus[], String nombre){
+        
+        for (int i = 1; i <= uAlu; i++) {
+            String tmp = claseAlus[i].getNombre();
+            
+            if (nombre.equals(tmp)) {
+                claseAlus[i].mostrar();
+            }
         }
     }
 }
