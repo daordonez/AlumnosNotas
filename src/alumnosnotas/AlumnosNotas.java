@@ -5,6 +5,9 @@
  */
 package alumnosnotas;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /**
  *
  * @author diegordonez
@@ -14,28 +17,36 @@ public class AlumnosNotas {
     //Control de alumnos insertados al Array "clase". Evita salida de rango en lectura del Array.
     static int uAlu = 0;
 
+//    private static Iterator<Alumno> itAlu ;
+    
     public static void main(String[] args) {
 
+        
         Utils.infoUs("--> Registro de notas <--");
-        //Pregunta con cuantos alumnos contará la clase
-        Utils.infoUs("Crear clase de alumnos");
-        int cAlus = 0;
-        do {
+//        Pregunta con cuantos alumnos contará la clase
+//        Utils.infoUs("Crear clase de alumnos");
+//        int cAlus = 0;
+//        do {
+//
+//            System.out.print("Introduzca cantidad de alumnos por clase: ");
+//
+//            //Evitar caracteres no alfabéticos
+//            try {
+//                cAlus = Utils.leerInt();
+//            } catch (java.util.InputMismatchException e) {
+//                Utils.redInfo("Caracter no valido");
+//                Utils.flush();
+//            }
+//        } while (cAlus <= 0);
+//
+//        //Vector de alumnos que representa una clase de alumnos evita pos 0
+//        Alumno clase[] = new Alumno[cAlus + 1];
 
-            System.out.print("Introduzca cantidad de alumnos por clase: ");
-
-            //Evitar caracteres no alfabéticos
-            try {
-                cAlus = Utils.leerInt();
-            } catch (java.util.InputMismatchException e) {
-                Utils.redInfo("Caracter no valido");
-                Utils.flush();
-            }
-        } while (cAlus <= 0);
-
-        //Vector de alumnos que representa una clase de alumnos evita pos 0
-        Alumno clase[] = new Alumno[cAlus + 1];
-
+        ArrayList<Alumno> clase = new ArrayList<>();
+        
+        int cAlus = clase.size();
+        
+        
         boolean salir = false;
         int slc;
 
@@ -55,20 +66,16 @@ public class AlumnosNotas {
                 Utils.infoUs("");
                 System.out.print("Opción: ");
                 slc = Utils.leerInt();
+                Utils.flush();
+                
                 switch (slc) {
                     case 0:
                         salir = true;
                         break;
                     case 1:
 
-                        //No introducir mas alumnos de los que caben en el Array de alumnos
-                        if (cAlus > 0) {
-                            Utils.infoUs("Nuevo alumno <--");
-                            uAlu = nuevoAlumno(clase);
-                            cAlus--;
-                        } else {
-                            Utils.redInfo("Número máximo de alumnos alcanzado!");
-                        }
+                        Utils.infoUs("Nuevo alumno <--");
+                        uAlu = nuevoAlumno(clase);
 
                         break;
                     case 2:
@@ -110,7 +117,6 @@ public class AlumnosNotas {
                             System.out.print("Introduzca nombre que desea módificar:");
                             modificaAlumno(clase, Utils.leerCad());
                         }
-                        
                         break;
                     case 6:
                         break;
@@ -129,27 +135,28 @@ public class AlumnosNotas {
         } while (salir == false);
         
         System.out.print("Saliendo");
-        Utils.pausedExit(1);
+        Utils.pausedExit(1,'.', 3);
     }
 
-    public static int nuevoAlumno(Alumno vecAlus[]) {
+    public static int nuevoAlumno(ArrayList<Alumno> vecAlus) {
 
         //Preincremento para evitar posición 0 del Array de alumnos
         ++uAlu;
 
-        vecAlus[uAlu] = new Alumno();
+        vecAlus.add(new Alumno());
 
         return uAlu;
     }
 
-    public static void muestraVectorObj(Alumno vecAlus[]) {
+    public static void muestraVectorObj(ArrayList<Alumno> vecAlus) {
 
-        for (int i = 1; i < vecAlus.length; i++) {
-            //Evitar NullPointerExeption por no estar inicializado todo el vector de alumnos
-            if (vecAlus[i] == null) {
-                break;
+        Iterator<Alumno> itAlus = vecAlus.iterator();
+        
+        for (int i = 1; i < vecAlus.size(); i++) {
+            if (itAlus.hasNext()) {
+                vecAlus.get(i);
             }
-            vecAlus[i].mostrar();
+            
         }
     }
 
@@ -257,4 +264,5 @@ public class AlumnosNotas {
             }
         }
     }
+    
 }

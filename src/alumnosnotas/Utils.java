@@ -12,7 +12,6 @@ package alumnosnotas;
 import java.io.*;
 import java.util.*;
 
-
 public class Utils {
 
     private static Iterator it;
@@ -34,17 +33,21 @@ public class Utils {
         System.err.println();
         System.err.println(info);
     }
-    
+
     /**
-     * Función para pasusar salida. Va imprimiendo puntos con un retardo especificado por parametro
+     * Función para pasusar salida. Va imprimiendo puntos con un retardo
+     * especificado por parametro
+     *
      * @param seg Delay --> Tiempos en segundos entre punto y punto
+     * @param s Caracter que se desa mostrar en secuencia
+     * @param cantSimb --> cantidad de simbolos que quiere imprimir
      */
-    public static void pausedExit(int seg){
-        
+    public static void pausedExit(int seg, char s, int cantSimb) {
+
         int miliSeg = seg * 1000;
-        
-        for (int i = 0; i < 3; i++) {
-            System.out.print(".");
+
+        for (int i = 0; i < cantSimb; i++) {
+            System.out.print(s);
             try {
                 Thread.sleep(miliSeg);
             } catch (InterruptedException e) {
@@ -52,22 +55,21 @@ public class Utils {
                 flush();
             }
         }
-        System.out.println();
     }
-    
-    public static String capitalize(String toCapitalize){
+
+    public static String capitalize(String toCapitalize) {
         if (toCapitalize.length() == 0) {
             return toCapitalize;
         }
-        String capitalized = toCapitalize.substring(0,1).toUpperCase() + toCapitalize.substring(1);
-        
+        String capitalized = toCapitalize.substring(0, 1).toUpperCase() + toCapitalize.substring(1);
+
         return capitalized;
     }
 
     //Lecturas desde teclado
     public static String leerCad() {
         String cad;
-        cad = tec.next();
+        cad = tec.nextLine();
         return cad;
     }
 
@@ -133,8 +135,7 @@ public class Utils {
             try {
                 cadString = leerCad();
                 isString = true;
-                //Revisar
-                flush();
+
             } catch (java.util.InputMismatchException e) {
                 redInfo("Caracter no reconocido. Debe ser Cadena (String)");
                 flush();

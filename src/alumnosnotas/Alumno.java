@@ -180,8 +180,8 @@ public class Alumno {
         System.out.println("\t");
         verDirecc();
         mostrarNotas();
-
     }
+    
 
     private void mostrarNotas() {
         System.out.print("\t");
@@ -202,5 +202,6 @@ public class Alumno {
         System.out.println("Num: " + this.dirNum);
         System.out.println("CP: " + this.dirCP);
     }
+    
 
 }
