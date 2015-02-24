@@ -17,7 +17,7 @@ public class AlumnosNotas {
     //Control de alumnos insertados al Array "clase". Evita salida de rango en lectura del Array.
     static int uAlu = 0;
 
-//    private static Iterator<Alumno> itAlu ;
+    private static Iterator<Alumno> itAlus;
     
     public static void main(String[] args) {
 
@@ -150,17 +150,17 @@ public class AlumnosNotas {
 
     public static void muestraVectorObj(ArrayList<Alumno> vecAlus) {
 
-        Iterator<Alumno> itAlus = vecAlus.iterator();
+        itAlus = vecAlus.iterator();
         
-        for (int i = 1; i < vecAlus.size(); i++) {
-            if (itAlus.hasNext()) {
-                vecAlus.get(i);
-            }
+        while (itAlus.hasNext()) {
+            Alumno next = itAlus.next();
+            
+            next.mostrar();
             
         }
     }
 
-    public static void pideNotas(Alumno claseAlus[]) {
+    public static void pideNotas(ArrayList<Alumno> vecAlus) {
         // "<=" como condición en el caso de que solo exista un alumno introducido
         for (int i = 1; i <= uAlu; i++) {
             Utils.infoUs("Nombre alumno: " + claseAlus[i].getNombre());
@@ -245,22 +245,45 @@ public class AlumnosNotas {
         }
     }
     
-    public static void modificaAlumno (Alumno claseAlus[], String nombre){
+    public static void modificaAlumno (ArrayList<Alumno> vecAlus, String nombre){
+        
         Utils.infoUs("Alumno:"+nombre);
         
-        for (int i = 1; i <= uAlu; i++) {
-            String tmp = claseAlus[i].getNombre();
-            
-            if (nombre.equals(tmp)) {
-                claseAlus[i].mostrar();
-                claseAlus[i].setNombre(Utils.imputString("\t Nuevo nombre:"));
-                claseAlus[i].setTelefono(Utils.imputString("\t Nuevo telefono:"));
-                claseAlus[i].setDirCalle(Utils.imputString("\t Nuevo nombre calle:"));
-                claseAlus[i].setDirNum(Utils.imputString("\t Nuevo número (Dirección):"));
-                claseAlus[i].setDirCP(Utils.imputInt("\t Nuevo CP:"));
-                break;
-            }else{
-                Utils.redInfo("No existen alumnos con el nombre: "+nombre+" en esta clase");
+//        vecAlus.stream().filter((aluInVec) -> (aluInVec.getNombre().equals(nombre)));
+//        vecAlus.stream().filter((aluInVec) -> (aluInVec.getNombre().equals(nombre))).map((aluInVec) -> {
+//            aluInVec.mostrar();
+//            return aluInVec;
+//        }).map((aluInVec) -> {
+//            //Nuevos datos
+//            Utils.infoUs("Nuevos datos para: "+aluInVec.getNombre());
+//            return aluInVec;
+//        }).map((aluInVec) -> {
+//            aluInVec.setNombre(Utils.capitalize(Utils.imputString("Nuevo nombre: ")));
+//            return aluInVec;
+//        }).map((aluInVec) -> {
+//            aluInVec.setTelefono(Utils.imputString("Nuevo telefono: "));
+//            return aluInVec;
+//        }).map((aluInVec) -> {
+//            aluInVec.setDirCalle(Utils.capitalize(Utils.imputString("Nueva Calle: ")));
+//            return aluInVec;
+//        }).map((aluInVec) -> {
+//            aluInVec.setDirNum(Utils.imputString("Nuevo número (Dirección): "));
+//            return aluInVec;
+//        }).forEach((aluInVec) -> {
+//            aluInVec.setDirCP(Utils.imputInt("Nuevo CP: "));
+//        });
+//    }
+        
+        for (Alumno aluInVec : vecAlus) {
+            if (aluInVec.getNombre().equals(nombre)){
+                aluInVec.mostrar();
+                //Nuevos datos
+                Utils.infoUs("Nuevos datos para: "+aluInVec.getNombre());
+                aluInVec.setNombre(Utils.capitalize(Utils.imputString("Nuevo nombre: ")));
+                aluInVec.setTelefono(Utils.imputString("Nuevo telefono: "));
+                aluInVec.setDirCalle(Utils.capitalize(Utils.imputString("Nueva Calle: ")));
+                aluInVec.setDirNum(Utils.imputString("Nuevo número (Dirección): "));
+                aluInVec.setDirCP(Utils.imputInt("Nuevo CP: "));
             }
         }
     }
