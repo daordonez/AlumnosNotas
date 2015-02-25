@@ -68,7 +68,7 @@ public class Utils {
 
     public static void showAlert(String str) {
 
-        infoUs(str);
+        infoUs("");
         infoUs(str);
     }
 
@@ -131,12 +131,13 @@ public class Utils {
     }
 
     public static float imputFloat(String cadena) {
+        
         float numFloat = 0;
 
         boolean isFloat = false;
 
         do {
-            System.out.println(cadena);
+            System.out.print(cadena);
             try {
                 numFloat = leeFloat();
             } catch (java.util.InputMismatchException e) {

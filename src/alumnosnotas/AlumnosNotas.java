@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package alumnosnotas;
 
 import java.util.ArrayList;
@@ -12,9 +13,8 @@ import java.util.Iterator;
  *
  * @author diegordonez
  */
-public class AlumnosNotas {
 
-   
+public class AlumnosNotas {
 
     private static Iterator<Alumno> itAlus;
 
@@ -23,8 +23,6 @@ public class AlumnosNotas {
         Utils.infoUs("--> Registro de notas <--");
 
         ArrayList<Alumno> clase = new ArrayList<>();
-
-        int cAlus = clase.size();
 
         boolean salir = false;
         int slc;
@@ -44,6 +42,7 @@ public class AlumnosNotas {
                 System.out.println("0. Salir");
                 Utils.infoUs("");
                 System.out.print("Opción: ");
+                //Evitar dejar buffer ocupado con ENTER
                 slc = Utils.leerInt();
                 Utils.flush();
 
@@ -112,12 +111,20 @@ public class AlumnosNotas {
                     case 7:
                         break;
                     case 8:
+                        
+                        if (clase.isEmpty()) {
+                            Utils.showAlert("La lista de alumnos está vacia");
+                        }else{
+                            borrarTodos(clase);
+                        }
+                        
                         break;
                     default:
                         Utils.redInfo("Opción incorrecta");
                         break;
                 }
             } catch (java.util.InputMismatchException e) {
+                //Caracteres alfabeticos no permitidos
                 Utils.redInfo("Caracter no valido");
                 Utils.flush();
             }
@@ -281,7 +288,7 @@ public class AlumnosNotas {
                 do {
                     try {
                         aluInVec.mostrar();
-                        Utils.imputInt("Actualizar notas:");
+                        Utils.infoUs("Actualizar notas:");
                         System.out.println("1. Actualizar nota simple");
                         System.out.println("2. Actualizar todas las notas");
                         Utils.infoUs("");
@@ -310,6 +317,41 @@ public class AlumnosNotas {
                 Utils.showRedAlert("No existe alumnos con el nombre" + nombre + ".");
             }
         });
+    }
+    
+    public static void borrarTodos(ArrayList<Alumno> vecAlus){
+        
+        boolean isClear = false;
+        
+        do {
+            Utils.redInfo("");
+            Utils.showRedAlert("Acción irreversible!!");
+            Utils.redInfo("¿Desea continuar? [SI/NO] ");
+            System.err.print("Opción: ");
+            String opc = Utils.leerCad();
+
+            if (!(opc.equals("SI") || opc.equals("si") || opc.equals("NO") || opc.equals("no"))) {
+                Utils.redInfo("Cadena no permitida. Introduzca [SI/NO] [si/no]");
+            } else {
+                switch (opc) {
+                    case "SI":
+                    case "si":
+                        System.out.print("Borrando [");
+                        Utils.pausedExit(1, '*', 10);
+                        System.out.println("]");
+                        vecAlus.clear();
+                        isClear = true;
+                        break;
+                    case "NO":
+                    case "no":
+                        Utils.infoUs("Volviendo al menú principal");
+                        isClear = true;
+                        break;
+                }
+            }
+
+        } while (isClear == false);
+        
     }
 
 }

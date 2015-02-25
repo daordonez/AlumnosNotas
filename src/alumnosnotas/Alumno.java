@@ -160,19 +160,34 @@ public class Alumno {
     //Métodos públicos
     public void introNotas() {
         //Lectura usuario desde teclado
+        
+        //Matriz notas de 3x3
+        //Vector nomNotas = {"PRG","BDA","EDD"}
 
         System.out.println("Introduzca notas:");
 
         for (int i = 1; i < this.notas.length; i++) {
             System.out.println(Alumno.nomNotas[i]);
             for (int j = 1; j < this.notas[0].length; j++) {
+                
+                
+                
+                boolean isNota = false;
+                
+                do {
 
-                float nota = Utils.imputFloat("\t Eva " + j + ": ");
-                if (nota < 0 || nota > 10) {
-                    Utils.showRedAlert("Nota fuera de rango. Rango permitido 0-10");
-                } else {
-                    this.notas[i][j] = nota;
-                }
+                    float nota;
+
+                    nota = Utils.imputFloat("\t Eva " + j + ":");
+                    Utils.flush();
+                    
+                    if (nota < 0 || nota > 10) {
+                        Utils.showRedAlert("Nota fuera de rango. Rango permitido 0-10");
+                    } else {
+                        this.notas[i][j] = nota;
+                        isNota = true;
+                    }
+                } while (isNota == false);
             }
         }
     }
