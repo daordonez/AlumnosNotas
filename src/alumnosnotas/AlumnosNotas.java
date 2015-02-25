@@ -7,6 +7,7 @@ package alumnosnotas;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 /**
  *
@@ -109,7 +110,7 @@ public class AlumnosNotas {
                         break;
                     case 5:
                         
-                        if (uAlu == 0) {
+                        if (clase.isEmpty()) {
                             Utils.redInfo("No existen alumnos que módificar");
                         } else {
                             Utils.infoUs("Modificar datos alumno !¡");
@@ -162,13 +163,15 @@ public class AlumnosNotas {
 
     public static void pideNotas(ArrayList<Alumno> vecAlus) {
         // "<=" como condición en el caso de que solo exista un alumno introducido
-        for (int i = 1; i <= uAlu; i++) {
-            Utils.infoUs("Nombre alumno: " + claseAlus[i].getNombre());
+        
+        vecAlus.stream().forEach((Alumno aluInVec) -> {
+            
+            Utils.infoUs("Nombre alumno: " + aluInVec.getNombre());
             Utils.infoUs("-> Asignaturas <-");
             System.out.println("1. PRG (Programación)");
             System.out.println("2. BDA (Bases de datos)");
             System.out.println("3. EDD (Entornos)");
-
+            
             boolean isAsig = false;
             //Incializar variables para función getNotaSingle en clase Alumno
             int asig = 0;
@@ -179,11 +182,11 @@ public class AlumnosNotas {
                     asig = Utils.leerInt();
                     System.out.print("Selecciona evaluación:");
                     eva = Utils.leerInt();
-
+                    
                     //No permitir salirse del rango de la matriz de notas
                     if ((asig <= 0 || asig > 3) || (eva <= 0 || eva > 3)) {
                         Utils.redInfo("Valor(es) fuera de rango. Rango comprendido 1-3");
-
+                        
                     } else {
                         if (asig == 1) {
                             System.out.println("Programación");
@@ -192,17 +195,17 @@ public class AlumnosNotas {
                         } else if (asig == 3) {
                             System.out.println("Entornos de desarrollo");
                         }
-
+                        
                         System.out.println("EVA:" + eva);
                         isAsig = true;
                     }
-
+                    
                 } catch (java.util.InputMismatchException e) {
                     Utils.redInfo("Caracter no reconocido. Debe ser valor entero");
                     Utils.flush();
                 }
             } while (isAsig == false);
-
+            
             boolean isNota = false;
             float nota = 0;
             do {
@@ -213,7 +216,7 @@ public class AlumnosNotas {
                         Utils.redInfo("Nota fuera de rango. Rango permitido 0-10");
                     } else {
                         Utils.infoUs("");
-                        System.out.println("Alumno:" + claseAlus[i].getNombre());
+                        System.out.println("Alumno:" + aluInVec.getNombre());
                         System.out.println("\t Nota:" + nota);
                         Utils.infoUs("");
                         isNota = true;
@@ -223,69 +226,65 @@ public class AlumnosNotas {
                     Utils.flush();
                 }
             } while (isNota == false);
+            
+            aluInVec.setNotaSimple(asig, eva, nota);
+        });
+        
 
-            claseAlus[i].setNotaSimple(asig, eva, nota);
-        }
+
     }
 
-    public static void buscaAlumno(Alumno clasAlus[], String nombre) {
-
-        for (int i = 1; i <= uAlu; i++) {
-
-            String tmp = clasAlus[i].getNombre();
-
-            System.out.println(tmp);
-            if (tmp.equals(nombre)) {
-                clasAlus[i].mostrar();
-                break;
+    public static void buscaAlumno(ArrayList<Alumno> clasAlus, String nombre) {
+        
+        clasAlus.stream().forEach((aluInVec) -> {
+            if (aluInVec.getNombre().equals(nombre)) {
+                aluInVec.mostrar();
             }else{
-                Utils.redInfo("No existen alumnos con el nombre:"+nombre+" en esta clase");
+                Utils.redInfo("No existen alumno(s) con el nombre "+nombre);
             }
-
-        }
+        });
     }
     
     public static void modificaAlumno (ArrayList<Alumno> vecAlus, String nombre){
         
         Utils.infoUs("Alumno:"+nombre);
         
-//        vecAlus.stream().filter((aluInVec) -> (aluInVec.getNombre().equals(nombre)));
-//        vecAlus.stream().filter((aluInVec) -> (aluInVec.getNombre().equals(nombre))).map((aluInVec) -> {
-//            aluInVec.mostrar();
-//            return aluInVec;
-//        }).map((aluInVec) -> {
-//            //Nuevos datos
-//            Utils.infoUs("Nuevos datos para: "+aluInVec.getNombre());
-//            return aluInVec;
-//        }).map((aluInVec) -> {
-//            aluInVec.setNombre(Utils.capitalize(Utils.imputString("Nuevo nombre: ")));
-//            return aluInVec;
-//        }).map((aluInVec) -> {
-//            aluInVec.setTelefono(Utils.imputString("Nuevo telefono: "));
-//            return aluInVec;
-//        }).map((aluInVec) -> {
-//            aluInVec.setDirCalle(Utils.capitalize(Utils.imputString("Nueva Calle: ")));
-//            return aluInVec;
-//        }).map((aluInVec) -> {
-//            aluInVec.setDirNum(Utils.imputString("Nuevo número (Dirección): "));
-//            return aluInVec;
-//        }).forEach((aluInVec) -> {
-//            aluInVec.setDirCP(Utils.imputInt("Nuevo CP: "));
-//        });
-//    }
-        
-        for (Alumno aluInVec : vecAlus) {
-            if (aluInVec.getNombre().equals(nombre)){
-                aluInVec.mostrar();
-                //Nuevos datos
-                Utils.infoUs("Nuevos datos para: "+aluInVec.getNombre());
-                aluInVec.setNombre(Utils.capitalize(Utils.imputString("Nuevo nombre: ")));
-                aluInVec.setTelefono(Utils.imputString("Nuevo telefono: "));
-                aluInVec.setDirCalle(Utils.capitalize(Utils.imputString("Nueva Calle: ")));
-                aluInVec.setDirNum(Utils.imputString("Nuevo número (Dirección): "));
-                aluInVec.setDirCP(Utils.imputInt("Nuevo CP: "));
-            }
-        }
+        vecAlus.stream().filter((aluInVec) -> (aluInVec.getNombre().equals(nombre))).map((aluInVec) -> {
+            aluInVec.mostrar();
+            return aluInVec;
+        }).map((aluInVec) -> {
+            //Nuevos datos
+            Utils.infoUs("Nuevos datos para: "+aluInVec.getNombre());
+            return aluInVec;
+        }).map((aluInVec) -> {
+            aluInVec.setNombre(Utils.capitalize(Utils.imputString("Nuevo nombre: ")));
+            return aluInVec;
+        }).map((aluInVec) -> {
+            aluInVec.setTelefono(Utils.imputString("Nuevo telefono: "));
+            return aluInVec;
+        }).map((aluInVec) -> {
+            aluInVec.setDirCalle(Utils.capitalize(Utils.imputString("Nueva Calle: ")));
+            return aluInVec;
+        }).map((aluInVec) -> {
+            aluInVec.setDirNum(Utils.imputString("Nuevo número (Dirección): "));
+            return aluInVec;
+        }).forEach((aluInVec) -> {
+            aluInVec.setDirCP(Utils.imputInt("Nuevo CP: "));
+        });
+  //  }
+//}       
+//        for (Alumno aluInVec : vecAlus) {
+//            if (aluInVec.getNombre().equals(nombre)){
+//                aluInVec.mostrar();
+//                //Nuevos datos
+//                Utils.infoUs("Nuevos datos para: "+aluInVec.getNombre());
+//                aluInVec.setNombre(Utils.capitalize(Utils.imputString("Nuevo nombre: ")));
+//                aluInVec.setTelefono(Utils.imputString("Nuevo telefono: "));
+//                aluInVec.setDirCalle(Utils.capitalize(Utils.imputString("Nueva Calle: ")));
+//                aluInVec.setDirNum(Utils.imputString("Nuevo número (Dirección): "));
+//                aluInVec.setDirCP(Utils.imputInt("Nuevo CP: "));
+//            }
+//        }
     }
     
 }
