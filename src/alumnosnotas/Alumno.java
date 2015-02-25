@@ -9,8 +9,6 @@ package alumnosnotas;
  *
  * @author diegordonez
  */
-
-
 public class Alumno {
 
     //Limites de matriz de notas
@@ -67,7 +65,6 @@ public class Alumno {
     }
 
     //Constructor Completo
-
     /**
      * Constructor mas detallado. Rellena todos los campos descriptivos del
      * objeto , menos las notas. Incrementa el contador global de objetos
@@ -109,7 +106,7 @@ public class Alumno {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    
+
     //Nombre de la calle
     public String getDirCalle() {
         return dirCalle;
@@ -118,7 +115,7 @@ public class Alumno {
     public void setDirCalle(String dirCalle) {
         this.dirCalle = Utils.capitalize(dirCalle);
     }
-    
+
     //Número de la dirección
     public String getDirNum() {
         return dirNum;
@@ -127,7 +124,9 @@ public class Alumno {
     public void setDirNum(String dirNum) {
         this.dirNum = dirNum;
     }
+
     //CP - Dirección
+
     public int getDirCP() {
         return dirCP;
     }
@@ -135,7 +134,7 @@ public class Alumno {
     public void setDirCP(int dirCP) {
         this.dirCP = dirCP;
     }
-    
+
     //Se evita setCantAlu con tal de no poder modificar valor desde ningún lugar
     public static int getCantAlu() {
         return cantAlu;
@@ -157,19 +156,23 @@ public class Alumno {
     public void setNotaSimple(int asig, int eva, float valueNot) {
         this.notas[asig][eva] = valueNot;
     }
-    
+
     //Métodos públicos
     public void introNotas() {
         //Lectura usuario desde teclado
-        
 
         System.out.println("Introduzca notas:");
 
         for (int i = 1; i < this.notas.length; i++) {
             System.out.println(Alumno.nomNotas[i]);
             for (int j = 1; j < this.notas[0].length; j++) {
-                System.out.print("\t Eva " + j + ": ");
-                this.notas[i][j] = Utils.leeFloat();
+
+                float nota = Utils.imputFloat("\t Eva " + j + ": ");
+                if (nota < 0 || nota > 10) {
+                    Utils.showRedAlert("Nota fuera de rango. Rango permitido 0-10");
+                } else {
+                    this.notas[i][j] = nota;
+                }
             }
         }
     }
@@ -181,7 +184,6 @@ public class Alumno {
         verDirecc();
         mostrarNotas();
     }
-    
 
     private void mostrarNotas() {
         System.out.print("\t");
@@ -197,11 +199,11 @@ public class Alumno {
             System.out.println();
         }
     }
+
     private void verDirecc() {
         System.out.println("Calle: " + this.dirCalle);
         System.out.println("Num: " + this.dirNum);
         System.out.println("CP: " + this.dirCP);
     }
-    
 
 }

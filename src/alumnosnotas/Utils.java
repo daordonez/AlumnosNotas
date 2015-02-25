@@ -14,7 +14,7 @@ import java.util.*;
 
 public class Utils {
 
-    private static Iterator it;
+//    private static Iterator it;
     private static final Scanner tec = new Scanner(System.in);
 
     //Salidas por pantalla
@@ -65,11 +65,17 @@ public class Utils {
 
         return capitalized;
     }
-    
-    public static void showAlert(String str){
-        infoUs("");
+
+    public static void showAlert(String str) {
+
         infoUs(str);
         infoUs(str);
+    }
+
+    public static void showRedAlert(String str) {
+
+        redInfo(str);
+        redInfo("");
     }
 
     //Lecturas desde teclado
@@ -122,6 +128,24 @@ public class Utils {
         } while (isInt == false);
 
         return numInt;
+    }
+
+    public static float imputFloat(String cadena) {
+        float numFloat = 0;
+
+        boolean isFloat = false;
+
+        do {
+            System.out.println(cadena);
+            try {
+                numFloat = leeFloat();
+            } catch (java.util.InputMismatchException e) {
+                redInfo("Caracter no reconocido. Debe ser decimal (Float)");
+                flush();
+            }
+        } while (isFloat == false);
+
+        return numFloat;
     }
 
     /**
