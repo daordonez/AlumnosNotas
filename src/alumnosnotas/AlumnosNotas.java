@@ -14,32 +14,13 @@ import java.util.Iterator;
  */
 public class AlumnosNotas {
 
-    //Control de alumnos insertados al Array "clase". Evita salida de rango en lectura del Array.
-    static int uAlu = 0;
+   
 
     private static Iterator<Alumno> itAlus;
 
     public static void main(String[] args) {
 
         Utils.infoUs("--> Registro de notas <--");
-//        Pregunta con cuantos alumnos contará la clase
-//        Utils.infoUs("Crear clase de alumnos");
-//        int cAlus = 0;
-//        do {
-//
-//            System.out.print("Introduzca cantidad de alumnos por clase: ");
-//
-//            //Evitar caracteres no alfabéticos
-//            try {
-//                cAlus = Utils.leerInt();
-//            } catch (java.util.InputMismatchException e) {
-//                Utils.redInfo("Caracter no valido");
-//                Utils.flush();
-//            }
-//        } while (cAlus <= 0);
-//
-//        //Vector de alumnos que representa una clase de alumnos evita pos 0
-//        Alumno clase[] = new Alumno[cAlus + 1];
 
         ArrayList<Alumno> clase = new ArrayList<>();
 
@@ -51,7 +32,7 @@ public class AlumnosNotas {
         do {
             //Evitar caracteres alfabéticos
             try {
-                Utils.infoUs("--> Menú <--");
+                Utils.infoUs("");
                 System.out.println("1. Alta alumne");
                 System.out.println("2. Poner nota alumno");
                 System.out.println("3. Buscar alumno");
@@ -73,7 +54,7 @@ public class AlumnosNotas {
                     case 1:
 
                         Utils.infoUs("Nuevo alumno <--");
-                        uAlu = nuevoAlumno(clase);
+                        nuevoAlumno(clase);
 
                         break;
                     case 2:
@@ -89,7 +70,7 @@ public class AlumnosNotas {
 
                         break;
                     case 3:
-
+                        
                         //Evitar buscar alumnos si no existen alumnos dados de alta
                         if (clase.isEmpty()) {
                             Utils.showRedAlert("No existen alumnos dados de alta");
@@ -100,13 +81,13 @@ public class AlumnosNotas {
                             String aluBus = Utils.leerCad();
                             buscaAlumno(clase, aluBus);
                         }
-
                         break;
+                        
                     //Optativo
                     case 4:
                         break;
                     case 5:
-
+                        
                         if (clase.isEmpty()) {
                             Utils.showRedAlert("No existen alumnos que módificar");
                         } else {
@@ -123,10 +104,11 @@ public class AlumnosNotas {
                         } else {
                             Utils.infoUs("Modificar nota alumno !¡");
                             Utils.infoUs("");
-                            System.out.println("Introduzca nombre que desea módificar:");
+                            System.out.print("Introduzca nombre que desea módificar:");
+                            modificaNota(clase, Utils.leerCad());
                         }
-
                         break;
+                        
                     case 7:
                         break;
                     case 8:
@@ -145,14 +127,10 @@ public class AlumnosNotas {
         Utils.pausedExit(1, '.', 3);
     }
 
-    public static int nuevoAlumno(ArrayList<Alumno> vecAlus) {
+    public static void nuevoAlumno(ArrayList<Alumno> vecAlus) {
 
-        //Preincremento para evitar posición 0 del Array de alumnos
-        ++uAlu;
-
+        //ArrayList gestiona el solo las posiciones disponibles del vector
         vecAlus.add(new Alumno());
-
-        return uAlu;
     }
 
     public static void muestraVectorObj(ArrayList<Alumno> vecAlus) {
@@ -297,7 +275,7 @@ public class AlumnosNotas {
 
         vecAlus.stream().forEach((Alumno aluInVec) -> {
 
-            if (vecAlus.contains(aluInVec.getNombre())) {
+            if (aluInVec.getNombre().equals(nombre)) {
 
                 boolean isModified = false;
                 do {
@@ -308,6 +286,7 @@ public class AlumnosNotas {
                         System.out.println("2. Actualizar todas las notas");
                         Utils.infoUs("");
                         int opc = Utils.imputInt("Introduzca opción: ");
+                        Utils.flush();
 
                         switch (opc) {
                             case 1:
