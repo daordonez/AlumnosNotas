@@ -65,6 +65,12 @@ public class Utils {
 
         return capitalized;
     }
+    
+    public static void showAlert(String str){
+        infoUs("");
+        infoUs(str);
+        infoUs(str);
+    }
 
     //Lecturas desde teclado
     public static String leerCad() {

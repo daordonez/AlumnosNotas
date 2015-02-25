@@ -82,7 +82,7 @@ public class AlumnosNotas {
                     case 2:
 
                         //No poner notas si no existen alumnos introducidos
-                        if (uAlu == 0) {
+                        if (clase.isEmpty()) {
                             Utils.redInfo("No existen alumnos dados de alta");
                         } else {
                             muestraVectorObj(clase);
@@ -94,7 +94,7 @@ public class AlumnosNotas {
                     case 3:
 
                         //Evitar buscar alumnos si no existen alumnos dados de alta
-                        if (uAlu == 0) {
+                        if (clase.isEmpty()) {
                             Utils.redInfo("No existen alumnos dados de alta");
                         } else {
 
@@ -207,7 +207,7 @@ public class AlumnosNotas {
             } while (isAsig == false);
             
             boolean isNota = false;
-            float nota = 0;
+            float nota;
             do {
                 try {
                     System.out.print("Introduce nota de asignatura:");
@@ -219,15 +219,15 @@ public class AlumnosNotas {
                         System.out.println("Alumno:" + aluInVec.getNombre());
                         System.out.println("\t Nota:" + nota);
                         Utils.infoUs("");
+                        aluInVec.setNotaSimple(asig, eva, nota);
+                        Utils.showAlert("Nota introducida correctamente!");
                         isNota = true;
                     }
                 } catch (java.util.InputMismatchException e) {
                     Utils.redInfo("Caracter no reconocido.Debe ser valor decimal");
                     Utils.flush();
                 }
-            } while (isNota == false);
-            
-            aluInVec.setNotaSimple(asig, eva, nota);
+            } while (isNota == false);    
         });
         
 
