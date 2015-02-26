@@ -19,7 +19,7 @@ public class Utils {
 
     //Salidas por pantalla
     public static void infoUs(String info) {
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 35; i++) {
             System.out.print("*");
         }
         System.out.println();
@@ -27,7 +27,7 @@ public class Utils {
     }
 
     public static void redInfo(String info) {
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 35; i++) {
             System.err.print("*");
         }
         System.err.println();
@@ -131,7 +131,7 @@ public class Utils {
     }
 
     public static float imputFloat(String cadena) {
-        
+
         float numFloat = 0;
 
         boolean isFloat = false;
@@ -140,6 +140,7 @@ public class Utils {
             System.out.print(cadena);
             try {
                 numFloat = leeFloat();
+                isFloat = true;
             } catch (java.util.InputMismatchException e) {
                 redInfo("Caracter no reconocido. Debe ser decimal (Float)");
                 flush();
