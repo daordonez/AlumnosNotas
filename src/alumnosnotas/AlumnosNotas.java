@@ -98,6 +98,8 @@ public class AlumnosNotas {
                         }else{
                             Utils.infoUs("Estadisticas");
                             int toPrint[][] = estadisticas(clase);
+                            
+                            
                             imprimeEst(toPrint);
                         }
                         
@@ -120,9 +122,13 @@ public class AlumnosNotas {
                         } else {
                             Utils.infoUs("Modificar nota alumno !¡");
                             Utils.infoUs("");
-                            System.out.print("Introduzca nombre que desea módificar:");
+                            System.out.println("Nombre que desea modificar: ");
                             int fAlu = buscaAlumno(clase, Utils.leerCad());
-                            modificaNota(clase, fAlu);
+                            
+                            if (fAlu >= 0) {
+                                modificaNota(clase, fAlu);
+                            }
+                            
                         }
                         break;
 
@@ -258,15 +264,19 @@ public class AlumnosNotas {
     public static int buscaAlumno(ArrayList<Alumno> vecAlus, String nombre) {
 
         int idx = -1;
+        boolean exist = false;
         
         String strBusq = Utils.capitalize(nombre);
-
+        
         for (Alumno alu : vecAlus) {
             if (alu.getNombre().equals(strBusq)) {
-                idx = vecAlus.lastIndexOf(alu);
-            } else {
-                Utils.redInfo("No existen alumnos con el nombre: " + nombre);
-            }
+                idx = vecAlus.indexOf(alu);
+                exist = true;
+                break;
+            } 
+        }
+        if ( exist == false) {
+            Utils.redInfo("No existen alumnos con el nombre:"+nombre);
         }
 
         return idx;
@@ -274,33 +284,33 @@ public class AlumnosNotas {
     
     public static int [][] estadisticas(ArrayList<Alumno> vecAlus){
      
-        final int MAX_FIL = 4;
-        final int MAX_COL = 4;
+        final int MAX_FIL = 3;
+        final int MAX_COL = 3;
         
         //Evitar posición 1
         int matrizResult[][] = new int[MAX_FIL + 1][MAX_COL + 1];
-        int acAp[][] = new int[MAX_FIL + 1][MAX_COL + 1];
-        int cantAp [][] = new int[MAX_FIL + 1][MAX_COL + 1];
-        
         
         vecAlus.stream().forEach((Alumno alu) -> {
+            
             for (int i = 1; i < matrizResult.length; i++) {
                 for (int j = 1; j < matrizResult[0].length; j++) {
 
                     if (alu.getNotas(i, j) >= 5) {
-//                        float tmp = alu.getNotas(i, j);
-//                        acAp[i][j] += (int) tmp;
-                        cantAp[i][j]++;
-
-                        //Calculo de aprobados
-                        int aprs = cantAp[i][j] / vecAlus.size();
                         
-                        matrizResult[i][j] = aprs;
+                        matrizResult[i][j] ++;
                     }
                 }
-            }
-        });
+            } 
+        });     
         
+        for (int i = 1; i < matrizResult.length; i++) {
+            for (int j = 1; j < matrizResult[0].length; j++) {
+                
+                int tmp = (matrizResult[i][j] * vecAlus.size()) / 100;
+                
+                matrizResult[i][j] = tmp;
+            }   
+        }
         return matrizResult;
         
     }
@@ -314,6 +324,7 @@ public class AlumnosNotas {
             for (int j = 1; j < stad[1].length; j++) {
                 System.out.print("| "+stad[i][j]);
             }
+            System.out.println();
         }
     }
 
