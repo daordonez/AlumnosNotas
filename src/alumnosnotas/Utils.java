@@ -207,4 +207,21 @@ public class Utils {
         }
     }
 
+    public static Alumno[] AlusIn() {
+        
+        Alumno aluDemo[] = new Alumno[4];
+        Alumno alu1 = new Alumno("Diego", "653817604", "Carles Ferris", "22", 46702);
+        Alumno alu2 = new Alumno("Amparo", "627157928", "Lector Romero", "72", 46702);
+        Alumno alu3 = new Alumno("Marlen", "658645008", "Carles Ferris", "22", 46702);
+        Alumno alu4 = new Alumno("Wins", "653817604", "Carles Ferris", "22", 46702);
+        
+        
+        aluDemo[0] = alu1;
+        aluDemo[1] = alu2;
+        aluDemo[2] = alu3;
+        aluDemo[3] = alu4;
+        
+        
+        return aluDemo;
+    }
 }
