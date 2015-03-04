@@ -6,15 +6,11 @@
 package alumnosnotas;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
 /**
  *
  * @author diegordonez
  */
 public class AlumnosNotas {
-
-    private static Iterator<Alumno> itAlus;
 
     public static void main(String[] args) {
 
@@ -48,11 +44,16 @@ public class AlumnosNotas {
                     case 0:
                         salir = true;
                         break;
-                    case 1:
+                    case 1:                       
+//                      Descomentar las siguientes lineas para alumnos de demostración
+//                      Alumno alusDemo[] = Utils.AlusIn();
+//                      clase.addAll(Arrays.asList(alusDemo));
 
                         Utils.infoUs("Nuevo alumno <--");
                         nuevoAlumno(clase);
 
+                        Utils.showAlert("Introducido(s)");
+                        
                         break;
                     case 2:
 
@@ -78,16 +79,27 @@ public class AlumnosNotas {
                             //Recoge el resultado de la busqueda
                             int idxAlu = buscaAlumno(clase, aluBus);
                             
-                            //Si exist el indice será mayor que 0
+                            //Si existe el indice será mayor que 0
                             if (idxAlu >= 0) {
                                 muestraObj(clase, idxAlu);
-                            }
-                            
+                            }                            
                         }
                         break;
 
                     //Optativo
                     case 4:
+                        
+                        if (clase.isEmpty()) {
+                            Utils.showAlert("No existen alumnos para mostrar estadisticas");
+                        }else{
+                            Utils.infoUs("Estadisticas");
+                            //Calculos integrales de todos los valores dependientes de los alumnos aprobados
+                            int toPrint[][] = estadisticasInd(clase);
+                            
+                            //Impresión por pantalla de la matriz estadistica
+                            imprimeEst(toPrint);
+                        }
+                        
                         break;
                     case 5:
 
@@ -107,8 +119,13 @@ public class AlumnosNotas {
                         } else {
                             Utils.infoUs("Modificar nota alumno !¡");
                             Utils.infoUs("");
-                            System.out.print("Introduzca nombre que desea módificar:");
-                            modificaNota(clase, Utils.leerCad());
+                            System.out.print("Nombre que desea modificar: ");
+                            int fAlu = buscaAlumno(clase, Utils.leerCad());
+                            
+                            if (fAlu >= 0) {
+                                modificaNota(clase, fAlu);
+                            }
+                            
                         }
                         break;
 
@@ -134,8 +151,10 @@ public class AlumnosNotas {
                         if (clase.isEmpty()) {
                             Utils.showAlert("La lista de alumnos está vacia");
                         } else {
-                            //Valor 1 final para limpiar todo el vector.Valor 1 intermedio para evitar error en la llamada 
-                            //y reutilización del código
+                            /*
+                            Valor 1 final para limpiar todo el vector.Valor 1 intermedio para evitar error en la llamada 
+                            y reutilización del código   
+                            */
                             borrarObjs(clase, 1, 1);
                         }
 
@@ -150,21 +169,24 @@ public class AlumnosNotas {
                 Utils.flush();
             }
         } while (salir == false);
-
+        
+        
+        //Finalización del programa
         System.out.print("Saliendo");
         Utils.pausedExit(1, '.', 3);
     }
 
     public static void nuevoAlumno(ArrayList<Alumno> vecAlus) {
 
-        //ArrayList gestiona el solo las posiciones disponibles del vector
+        //ArrayList gestiona por si solo las posiciones disponibles del vector
         vecAlus.add(new Alumno());
     }
 
     public static void muestraObj(ArrayList<Alumno> vecAlus, int index) {
 
+        //Indice proveniente de la función de búsqueda
         Alumno alu = vecAlus.get(index);
-
+        //Método própio de la clase
         alu.mostrar();
     }
 
@@ -175,6 +197,12 @@ public class AlumnosNotas {
         });
     }
 
+    /**
+     * Función recogedora de un valor simple de una nota.
+     * Pregunta por Asignatura y evaluación y lleva control de errores, tanto de rango como de caracteres
+     * no esperados.
+     * @param alu Objeto de la clase alumno que se desee modificar.
+     */
     public static void notaSimple(Alumno alu) {
 
         Utils.infoUs("Nombre alumno: " + alu.getNombre());
@@ -230,6 +258,7 @@ public class AlumnosNotas {
                     System.out.println("Alumno:" + alu.getNombre());
                     System.out.println("\t Nota:" + nota);
                     Utils.infoUs("");
+                    //Habiendose cumplido todos los parametros. Modifica las notas del Objeto Alumno
                     alu.setNotaSimple(asig, eva, nota);
                     Utils.showAlert("Nota introducida correctamente!");
                     isNota = true;
@@ -241,19 +270,99 @@ public class AlumnosNotas {
         } while (isNota == false);
     }
 
-    public static int buscaAlumno(ArrayList<Alumno> clasAlus, String nombre) {
+    /**
+     * Recorre todo el vector y devuelve indice si existe una ocurrencia.
+     * @param vecAlus vector que se desea recorrer
+     * @param nombre Criterio de busqueda a encontrar 
+     * @return Indice basado en el criterio de búsqueda pasado.
+     */
+    public static int buscaAlumno(ArrayList<Alumno> vecAlus, String nombre) {
 
         int idx = -1;
-
-        for (Alumno alu : clasAlus) {
-            if (alu.getNombre().equals(nombre)) {
-                idx = clasAlus.lastIndexOf(alu);
-            } else {
-                Utils.redInfo("No existen alumnos con el nombre: " + nombre);
-            }
+        boolean exist = false;
+        
+        String strBusq = Utils.capitalize(nombre);
+        
+        for (Alumno alu : vecAlus) {
+            if (alu.getNombre().equals(strBusq)) {
+                idx = vecAlus.indexOf(alu);
+                exist = true;
+                break;
+            } 
+        }
+        if ( exist == false) {
+            Utils.redInfo("No existen alumnos con el nombre:"+nombre);
         }
 
         return idx;
+    }
+    
+    public static int [][] estadisticasInd(ArrayList<Alumno> vecAlus){
+     
+        final int MAX_FIL = 3;
+        final int MAX_COL = 3;
+        
+        //Evitar posición 1
+        int matrizResult[][] = new int[MAX_FIL + 2][MAX_COL + 2];
+        
+        //Recorrido de vector de alumnos para ir sumando valores individuales en cada asignatura y evaluación
+        vecAlus.stream().forEach((a) -> {
+            for (int i = 1; i < MAX_FIL; i++) {
+                for (int j = 1; j < MAX_COL; j++) {
+
+                    if (a.getNotas(i, j) >= 5) {
+                        
+                        matrizResult[i][j] ++;
+                    }
+                }
+            }
+        });
+        //Porcentaje de aprobados por asignatura
+        for (int i = 1; i < matrizResult.length; i++) {
+            for (int j = 1; j < matrizResult[0].length; j++) {
+                
+                int tmp = matrizResult[i][j];
+                if (tmp != 0) {
+                    
+                     matrizResult[i][j] = (tmp * 100) / vecAlus.size();
+                }
+            }   
+        }
+       
+        //Porcentajes de aprobados por evaluación y asignatura
+        for (int col = 1; col < matrizResult[0].length; col++) {
+            for (int fil = 1; fil < matrizResult.length; fil++) {
+                
+                int tmp = matrizResult[col][fil];
+                if (tmp != 0) {
+                    matrizResult[4][col] += tmp / 3;
+                    matrizResult[fil][4] += tmp / 3;
+                }    
+            }            
+        }
+                
+        return matrizResult;
+    }
+    
+    public static void imprimeEst(int stad[][]){
+    
+        
+        String nombres[] = Alumno.getNomNotas();
+        
+        String ev[] = {"","EVA1","EVA2","EVA3","TOTAL"};
+        
+        for (String e : ev) {
+            System.out.printf("%-4s ",e);
+        }
+        System.out.println();
+        for (int i = 1; i < stad.length; i++) {
+            System.out.print(nombres[i]);
+            for (int j = 1; j < stad[1].length; j++) {
+                System.out.printf("%4d |",stad[i][j]);
+            }
+            System.out.println();
+        }
+        
     }
 
     public static void modificaAlumno(ArrayList<Alumno> vecAlus, String nombre) {
@@ -282,32 +391,24 @@ public class AlumnosNotas {
         }).forEach((aluInVec) -> {
             aluInVec.setDirCP(Utils.imputInt("Nuevo CP: "));
         });
-        //  }
-//}       
-//        for (Alumno aluInVec : vecAlus) {
-//            if (aluInVec.getNombre().equals(nombre)){
-//                aluInVec.mostrar();
-//                //Nuevos datos
-//                Utils.infoUs("Nuevos datos para: "+aluInVec.getNombre());
-//                aluInVec.setNombre(Utils.capitalize(Utils.imputString("Nuevo nombre: ")));
-//                aluInVec.setTelefono(Utils.imputString("Nuevo telefono: "));
-//                aluInVec.setDirCalle(Utils.capitalize(Utils.imputString("Nueva Calle: ")));
-//                aluInVec.setDirNum(Utils.imputString("Nuevo número (Dirección): "));
-//                aluInVec.setDirCP(Utils.imputInt("Nuevo CP: "));
-//            }
-//        }
     }
 
-    public static void modificaNota(ArrayList<Alumno> vecAlus, String nombre) {
+    /**
+     * Modificación de notas. Es capaz de modificar una nota simple haciendo llamada a la función notaSimple, o
+     * de modificar todas las notas de un objetos que se encuentre en el vector dinámico pasado, haciendo uso
+     * de la función propia de la clase.
+     * @param vecAlus Vector contenedor de los Objetos "Alumno" que se desean modificar
+     * @param index Indice donde se encuentra el objeto "Alumno" que se desea modificar.
+     */
+    public static void modificaNota(ArrayList<Alumno> vecAlus, int index) {
 
-        vecAlus.stream().forEach((Alumno aluInVec) -> {
-
-            if (aluInVec.getNombre().equals(nombre)) {
-
+        
+        Alumno alu = vecAlus.get(index);
+        
                 boolean isModified = false;
                 do {
                     try {
-                        aluInVec.mostrar();
+                        alu.mostrar();
                         Utils.infoUs("Actualizar notas:");
                         System.out.println("1. Actualizar nota simple");
                         System.out.println("2. Actualizar todas las notas");
@@ -317,13 +418,13 @@ public class AlumnosNotas {
 
                         switch (opc) {
                             case 1:
-                                notaSimple(aluInVec);
+                                notaSimple(alu);
                                 Utils.showAlert("Nota modificada!");
                                 isModified = true;
                                 break;
                             case 2:
-                                Utils.infoUs("Modificación notas para:" + nombre);
-                                aluInVec.introNotas();
+                                Utils.infoUs("Modificación notas para:" + alu.getNombre());
+                                alu.introNotas();
                                 Utils.showAlert("Notas modificadas correctamente!");
                                 isModified = true;
                                 break;
@@ -334,10 +435,7 @@ public class AlumnosNotas {
                         Utils.redInfo("Caracter no reconocido");
                     }
                 } while (isModified == false);
-            } else {
-                Utils.showRedAlert("No existe alumnos con el nombre" + nombre + ".");
-            }
-        });
+            
     }
 
     /**

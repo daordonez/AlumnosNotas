@@ -57,6 +57,12 @@ public class Utils {
         }
     }
 
+    /**
+     * Función que devuelve la cadena pasada con la primera letra en mayusculas.
+     * 
+     * @param toCapitalize Cadena que a la que se desea dar formato
+     * @return Cadena formateada con la primera letra mayuscula.
+     */
     public static String capitalize(String toCapitalize) {
         if (toCapitalize.length() == 0) {
             return toCapitalize;
@@ -178,7 +184,7 @@ public class Utils {
     }
 
     //Escritura ficheros .TXT
-    static String creadorTXT(String dirArch) {
+    public static String creadorTXT(String dirArch) {
 
         String rutaAbs = "/Users/diegordonez/Desktop/".concat(dirArch + ".txt");
 
@@ -195,7 +201,7 @@ public class Utils {
         return rutaAbs;
     }
 
-    static void escribir(String cad, String pathString) {
+    public static void escribir(String cad, String pathString) {
 
         try {
             try (FileWriter esc = new FileWriter(pathString, true); BufferedWriter bufW = new BufferedWriter(esc)) {
@@ -207,4 +213,28 @@ public class Utils {
         }
     }
 
+    
+    /**
+     * Función de introducción de alumnos de demostración. 
+     * Esta función introduce cuatro alumnos de demostración a un vector de objetos de la clase "Alumno"
+     * @return 
+     */
+    public static Alumno[] AlusIn() {
+        
+        Alumno aluDemo[] = new Alumno[4];
+        Alumno alu1 = new Alumno("Fran", "611111114", "Calle Grande", "22", 46702);
+        Alumno alu2 = new Alumno("Rafael", "600452338", "Calle Pequena", "72", 46702);
+        Alumno alu3 = new Alumno("Maria", "658000008", "Calle Mediana", "22", 46702);
+        Alumno alu4 = new Alumno("Ana", "600000004", "Calle larga", "22", 46702);
+        
+        
+        
+        aluDemo[0] = alu1;
+        aluDemo[1] = alu2;
+        aluDemo[2] = alu3;
+        aluDemo[3] = alu4;
+        
+        
+        return aluDemo;
+    }
 }

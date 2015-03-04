@@ -14,6 +14,7 @@ public class Alumno {
     //Limites de matriz de notas
     private static final int MAX_ASIG = 3;
     private static final int MAX_EVA = 3;
+    
 
     //posibles asignaturas que pueden existir
     private String nombre;
@@ -22,7 +23,7 @@ public class Alumno {
     private String dirNum;
     private int dirCP;
     private float notas[][];
-    private static String nomNotas[] = {"", "PRG", "BDA", "EDD"};
+    private static String nomNotas[] = {"", "PRG", "BDA", "EDD","TTL"};
 
     //Contador de objetos de tipo alumno crados 
     private static int cantAlu = 0;
@@ -143,6 +144,12 @@ public class Alumno {
         return notas[asig][eva];
     }
 
+    public static String[] getNomNotas() {
+        return nomNotas;
+    }
+    
+    
+
     /**
      * Metodo adaptado a tener que pedir asignatura de la que se quiere
      * introducir la nota y la evaluación. Es decir Introducir nota simple en
@@ -187,7 +194,7 @@ public class Alumno {
             }
         }
     }
-
+    
     public void mostrar() {
         Utils.infoUs("Información alumno:");
         System.out.println("Nombre: " + this.nombre);
