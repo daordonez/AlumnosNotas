@@ -23,7 +23,7 @@ public class Alumno {
     private String dirNum;
     private int dirCP;
     private float notas[][];
-    private static String nomNotas[] = {"", "PRG", "BDA", "EDD"};
+    private static String nomNotas[] = {"", "PRG", "BDA", "EDD","TTL"};
 
     //Contador de objetos de tipo alumno crados 
     private static int cantAlu = 0;
