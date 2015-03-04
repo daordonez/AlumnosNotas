@@ -495,7 +495,5 @@ public class AlumnosNotas {
                 }
             }
         } while (isClear == false);
-
     }
-
 }
