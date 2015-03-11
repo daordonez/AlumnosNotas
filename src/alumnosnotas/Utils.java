@@ -204,7 +204,8 @@ public class Utils {
     public static void escribir(String cad, String pathString) {
 
         try {
-            try (FileWriter esc = new FileWriter(pathString, true); BufferedWriter bufW = new BufferedWriter(esc)) {
+            try (FileWriter esc = new FileWriter(pathString, true); 
+                    BufferedWriter bufW = new BufferedWriter(esc)) {
                 bufW.write(cad);
                 bufW.newLine();
             }

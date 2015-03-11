@@ -6,6 +6,8 @@
 package alumnosnotas;
 
 import java.util.ArrayList;
+//Necesario para descomentado y demo de alumnos
+import java.util.Arrays;
 /**
  *
  * @author diegordonez
@@ -46,11 +48,11 @@ public class AlumnosNotas {
                         break;
                     case 1:                       
 //                      Descomentar las siguientes lineas para alumnos de demostración
-//                      Alumno alusDemo[] = Utils.AlusIn();
-//                      clase.addAll(Arrays.asList(alusDemo));
+                      Alumno alusDemo[] = Utils.AlusIn();
+                      clase.addAll(Arrays.asList(alusDemo));
 
-                        Utils.infoUs("Nuevo alumno <--");
-                        nuevoAlumno(clase);
+//                        Utils.infoUs("Nuevo alumno <--");
+//                        nuevoAlumno(clase);
 
                         Utils.showAlert("Introducido(s)");
                         
@@ -307,8 +309,8 @@ public class AlumnosNotas {
         
         //Recorrido de vector de alumnos para ir sumando valores individuales en cada asignatura y evaluación
         vecAlus.stream().forEach((a) -> {
-            for (int i = 1; i < MAX_FIL; i++) {
-                for (int j = 1; j < MAX_COL; j++) {
+            for (int i = 1; i < MAX_FIL + 1; i++) {
+                for (int j = 1; j < MAX_COL + 1; j++) {
 
                     if (a.getNotas(i, j) >= 5) {
                         
@@ -319,7 +321,7 @@ public class AlumnosNotas {
         });
         //Porcentaje de aprobados por asignatura
         for (int i = 1; i < matrizResult.length; i++) {
-            for (int j = 1; j < matrizResult[0].length; j++) {
+            for (int j = 1; j < matrizResult[1].length; j++) {
                 
                 int tmp = matrizResult[i][j];
                 if (tmp != 0) {
@@ -334,6 +336,7 @@ public class AlumnosNotas {
             for (int fil = 1; fil < matrizResult.length; fil++) {
                 
                 int tmp = matrizResult[col][fil];
+                
                 if (tmp != 0) {
                     matrizResult[4][col] += tmp / 3;
                     matrizResult[fil][4] += tmp / 3;
